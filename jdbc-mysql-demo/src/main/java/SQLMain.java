@@ -1,9 +1,10 @@
+import dao.DealershipDAO;
 import io.github.cdimascio.dotenv.Dotenv;
+import models.Dealership;
 import org.apache.commons.dbcp2.BasicDataSource;
 
 import java.sql.*;
 import java.util.Scanner;
-
 
 public class SQLMain {
     public static void main(String[] args) {
@@ -25,6 +26,23 @@ public class SQLMain {
             dataSource.setUrl(url);
             dataSource.setUsername(user);
             dataSource.setPassword(password);
+
+            System.out.print("Enter the dealership id to search for individual dealership: ");
+            int dealershipId = inputSc.nextInt();
+            inputSc.nextLine();
+
+            //Creating dealership DAO (Data Access Object) to manage data retrieval from dealership table
+            DealershipDAO dealershipDAO = new DealershipDAO(dataSource);
+
+            Dealership d = dealershipDAO.findDealershipById(dealershipId);
+
+            System.out.printf("""
+                Dealership:
+                   id = %d
+                   name = %s
+                   phone = %s
+                   address = %s
+                """, d.getId(), d.getName(), d.getPhone(), d.getAddress());
 
             //Establish a new connection to MySQL database
             try (Connection conn = dataSource.getConnection()) {
