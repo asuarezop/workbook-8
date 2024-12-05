@@ -1,4 +1,5 @@
 package com.pluralsight.dealership.models;
+
 import JavaHelpers.ColorCodes;
 
 import java.util.ArrayList;
@@ -12,7 +13,8 @@ public class Dealership {
     private final ArrayList<Vehicle> inventory = new ArrayList<>();
 
     //Blank constructor for when values aren't known
-    public Dealership() {}
+    public Dealership() {
+    }
 
     //Constructor to create a new Dealership object
     public Dealership(int id, String name, String address, String phone) {
@@ -23,9 +25,7 @@ public class Dealership {
     }
 
     //Getters & Setters
-    public int getId() {
-        return id;
-    }
+    public int getId() { return id; }
 
     public String getName() {
         return name;
@@ -44,95 +44,95 @@ public class Dealership {
     }
 
     //Non-static methods for Dealership processing requests
-    public List<Vehicle> getVehiclesByPrice(double min, double max) {
-        ArrayList<Vehicle> results = new ArrayList<>();
-        for (Vehicle v: inventory) {
-            if (v.getPrice() >= min && v.getPrice() <= max) {
-                results.add(v);
-            }
-        }
-        return results;
-    }
-
-    public List<Vehicle> getVehiclesByMakeModel(String make, String model) {
-        ArrayList<Vehicle> results = new ArrayList<>();
-        for (Vehicle v: inventory) {
-            if (v.getMake().equalsIgnoreCase(make) && v.getModel().equalsIgnoreCase(model)) {
-                results.add(v);
-            }
-        }
-        return results;
-    }
-
-    public List<Vehicle> getVehiclesByYear(int year) {
-        ArrayList<Vehicle> results = new ArrayList<>();
-        for (Vehicle v: inventory) {
-            if (v.getYear() == year) {
-                results.add(v);
-            }
-        }
-        return results;
-    }
-
-    public List<Vehicle> getVehiclesByColor(String color) {
-        ArrayList<Vehicle> results = new ArrayList<>();
-        for (Vehicle v: inventory) {
-            if (v.getColor().equalsIgnoreCase(color)) {
-                results.add(v);
-            }
-        }
-        return results;
-    }
-
-    public List<Vehicle> getVehiclesByMileage(int min, int max) {
-        ArrayList<Vehicle> results = new ArrayList<>();
-        for (Vehicle v: inventory) {
-            if (v.getMiles() >= min && v.getMiles() <= max) {
-                results.add(v);
-            }
-        }
-        return results;
-    }
-
-    public List<Vehicle> getVehiclesByVehicleType(String vehicleType) {
-        ArrayList<Vehicle> results = new ArrayList<>();
-        for (Vehicle v: inventory) {
-            if (v.getVehicleType().equalsIgnoreCase(vehicleType)) {
-                results.add(v);
-            }
-        }
-        return results;
-    }
-
-    public List<Vehicle> getAllVehicles() {
-        ArrayList<Vehicle> results = new ArrayList<>();
-        for (Vehicle v: inventory) {
-            results.add(v);
-        }
-        return results;
-    }
-
-    public void addVehicle(Vehicle v) {
-        inventory.add(v);
-        //Confirmation message
-        System.out.println(ColorCodes.SUCCESS + ColorCodes.ITALIC + "Vehicle was added to current inventory!" + ColorCodes.RESET);
-    }
-
-    public void removeVehicle(Vehicle v) {
-        //Removing vehicle if it matches VIN inside current dealership inventory
-        inventory.removeIf(c -> c.getVin() == v.getVin());
-        //Confirmation message
-        System.out.println(ColorCodes.SUCCESS + ColorCodes.ITALIC + "Vehicle removed from dealership." + ColorCodes.RESET);
-    }
-
-    public Vehicle getVehiclesByVin(int vin) {
-        for(Vehicle v: inventory) {
-            if (v.getVin() == vin) {
-                return v;
-            }
-        }
-        return null;
-    }
+//    public List<Vehicle> getVehiclesByPrice(double min, double max) {
+//        ArrayList<Vehicle> results = new ArrayList<>();
+//        for (Vehicle v : inventory) {
+//            if (v.getPrice() >= min && v.getPrice() <= max) {
+//                results.add(v);
+//            }
+//        }
+//        return results;
+//    }
+//
+//    public List<Vehicle> getVehiclesByMakeModel(String make, String model) {
+//        ArrayList<Vehicle> results = new ArrayList<>();
+//        for (Vehicle v : inventory) {
+//            if (v.getMake().equalsIgnoreCase(make) && v.getModel().equalsIgnoreCase(model)) {
+//                results.add(v);
+//            }
+//        }
+//        return results;
+//    }
+//
+//    public List<Vehicle> getVehiclesByYear(int year) {
+//        ArrayList<Vehicle> results = new ArrayList<>();
+//        for (Vehicle v : inventory) {
+//            if (v.getYear() == year) {
+//                results.add(v);
+//            }
+//        }
+//        return results;
+//    }
+//
+//    public List<Vehicle> getVehiclesByColor(String color) {
+//        ArrayList<Vehicle> results = new ArrayList<>();
+//        for (Vehicle v : inventory) {
+//            if (v.getColor().equalsIgnoreCase(color)) {
+//                results.add(v);
+//            }
+//        }
+//        return results;
+//    }
+//
+//    public List<Vehicle> getVehiclesByMileage(int min, int max) {
+//        ArrayList<Vehicle> results = new ArrayList<>();
+//        for (Vehicle v : inventory) {
+//            if (v.getMiles() >= min && v.getMiles() <= max) {
+//                results.add(v);
+//            }
+//        }
+//        return results;
+//    }
+//
+//    public List<Vehicle> getVehiclesByVehicleType(String vehicleType) {
+//        ArrayList<Vehicle> results = new ArrayList<>();
+//        for (Vehicle v : inventory) {
+//            if (v.getVehicleType().equalsIgnoreCase(vehicleType)) {
+//                results.add(v);
+//            }
+//        }
+//        return results;
+//    }
+//
+//    public List<Vehicle> getAllVehicles() {
+//        ArrayList<Vehicle> results = new ArrayList<>();
+//        for (Vehicle v : inventory) {
+//            results.add(v);
+//        }
+//        return results;
+//    }
+//
+//    public void addVehicle(Vehicle v) {
+//        inventory.add(v);
+//        //Confirmation message
+//        System.out.println(ColorCodes.SUCCESS + ColorCodes.ITALIC + "Vehicle was added to current inventory!" + ColorCodes.RESET);
+//    }
+//
+//    public void removeVehicle(Vehicle v) {
+//        //Removing vehicle if it matches VIN inside current dealership inventory
+//        inventory.removeIf(c -> c.getVin() == v.getVin());
+//        //Confirmation message
+//        System.out.println(ColorCodes.SUCCESS + ColorCodes.ITALIC + "Vehicle removed from dealership." + ColorCodes.RESET);
+//    }
+//
+//    public Vehicle getVehiclesByVin(int vin) {
+//        for (Vehicle v : inventory) {
+//            if (v.getVin() == vin) {
+//                return v;
+//            }
+//        }
+//        return null;
+//    }
 
     @Override
     public String toString() {
