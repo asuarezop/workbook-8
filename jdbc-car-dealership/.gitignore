@@ -42,3 +42,4 @@ build/
 
 ### Resources ###
 /resources/*.properties
+testDB.properties
