@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Dealership {
-    private int dealership_id;
+    private int id;
     private String name;
     private String address;
     private String phone;
@@ -15,13 +15,18 @@ public class Dealership {
     public Dealership() {}
 
     //Constructor to create a new Dealership object
-    public Dealership(String name, String address, String phone) {
+    public Dealership(int id, String name, String address, String phone) {
+        this.id = id;
         this.name = name;
         this.address = address;
         this.phone = phone;
     }
 
     //Getters & Setters
+    public int getId() {
+        return id;
+    }
+
     public String getName() {
         return name;
     }
@@ -82,7 +87,7 @@ public class Dealership {
     public List<Vehicle> getVehiclesByMileage(int min, int max) {
         ArrayList<Vehicle> results = new ArrayList<>();
         for (Vehicle v: inventory) {
-            if (v.getOdometer() >= min && v.getOdometer() <= max) {
+            if (v.getMiles() >= min && v.getMiles() <= max) {
                 results.add(v);
             }
         }
