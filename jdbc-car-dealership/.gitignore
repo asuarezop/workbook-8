@@ -39,3 +39,6 @@ build/
 
 ### ENV Files ###
 !**/src/main/resources/.env
+
+### Resources ###
+/resources/*.properties
