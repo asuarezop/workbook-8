@@ -1,5 +1,4 @@
 import dao.DealershipDAO;
-import io.github.cdimascio.dotenv.Dotenv;
 import models.Dealership;
 import org.apache.commons.dbcp2.BasicDataSource;
 
@@ -9,7 +8,6 @@ import java.util.Scanner;
 public class SQLMain {
     public static void main(String[] args) {
         Scanner inputSc = new Scanner(System.in);
-        Dotenv dotenv = Dotenv.configure().load();
 
         // -- Try catch with resources ()
         /* Able to assign resources into try catch blocks. The advantage of this would be that a resource can be known throughout
