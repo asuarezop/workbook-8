@@ -10,7 +10,7 @@ public interface VehicleDAO {
     List<Vehicle> findVehiclesByMakeModel(String make, String model);
     List<Vehicle> findVehiclesByYear(int year);
     List<Vehicle> findVehiclesByColor(String color);
-    List<Vehicle> findVehiclesByMileage(int miles);
+    List<Vehicle> findVehiclesByMileage(int minMiles, int maxMiles);
     List<Vehicle> findVehiclesByVehicleType(String vehicleType);
     void addVehicleToInventory(Vehicle v);
     void removeVehicleFromInventory(Vehicle v);

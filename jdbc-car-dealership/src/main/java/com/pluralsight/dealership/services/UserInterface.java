@@ -113,10 +113,10 @@ public class UserInterface {
                     processGetByColorRequest(d);
                     break;
                 case "5":
-//                    processGetByMileageRequest(d);
+                    processGetByMileageRequest(d);
                     break;
                 case "6":
-//                    processGetByVehicleTypeRequest(d);
+                    processGetByVehicleTypeRequest(d);
                     break;
                 case "7":
                     processGetAllVehiclesRequest(d);
@@ -193,35 +193,35 @@ public class UserInterface {
             System.out.println("No vehicles found that match given color. Please try again.");
         }
     }
-//
-//    public void processGetByMileageRequest() {
-//        promptInstructions("Enter your desired mileage range to search vehicles from:  " + dealership.getName());
-//        String min = promptUser("Minimum mileage: ");
-//        int minMileage = Integer.parseInt(min);
-//
-//        String max = promptUser("Maximum mileage: ");
-//        int maxMileage = Integer.parseInt(max);
-//
-//        if (minMileage != 0 && maxMileage != 0) {
-//            List<Vehicle> vehicles = dealership.getVehiclesByMileage(minMileage, maxMileage);
-//            printVehicleList(vehicles);
-//        } else {
-//            System.out.println("No vehicles found that match provided mileage range. Please try again.");
-//        }
-//    }
-//
-//    public void processGetByVehicleTypeRequest() {
-//        promptInstructions("Enter vehicle type to search vehicles from:  " + dealership.getName());
-//        String vehicleType = promptUser("Type: ");
-//
-//        if (!vehicleType.isEmpty()) {
-//            List<Vehicle> vehicles = dealership.getVehiclesByVehicleType(vehicleType);
-//            printVehicleList(vehicles);
-//        } else {
-//            System.out.println("Invalid vehicle type. Please try again.");
-//        }
-//    }
-//
+
+    public void processGetByMileageRequest(Dealership dealership) {
+        promptInstructions("Enter your desired mileage range to search vehicles from:  " + dealership.getName());
+        String min = promptUser("Minimum mileage: ");
+        int minMileage = Integer.parseInt(min);
+
+        String max = promptUser("Maximum mileage: ");
+        int maxMileage = Integer.parseInt(max);
+
+        if (minMileage != 0 && maxMileage != 0) {
+            List<Vehicle> vehicles = vehicleManager.findVehiclesByMileage(minMileage, maxMileage);
+            printVehicleList(vehicles);
+        } else {
+            System.out.println("No vehicles found that match provided mileage range. Please try again.");
+        }
+    }
+
+    public void processGetByVehicleTypeRequest(Dealership dealership) {
+        promptInstructions("Enter vehicle type to search vehicles from:  " + dealership.getName());
+        String vehicleType = promptUser("Type: ");
+
+        if (!vehicleType.isEmpty()) {
+            List<Vehicle> vehicles = vehicleManager.findVehiclesByVehicleType(vehicleType);
+            printVehicleList(vehicles);
+        } else {
+            System.out.println("Invalid vehicle type. Please try again.");
+        }
+    }
+
     public void processGetAllVehiclesRequest(Dealership dealership) {
         promptInstructions("Inventory for:  " + dealership.getName());
 
