@@ -107,28 +107,28 @@ public class UserInterface {
                     processGetByMakeModelRequest(d);
                     break;
                 case "3":
-//                    processGetByYearRequest();
+                    processGetByYearRequest(d);
                     break;
                 case "4":
-//                    processGetByColorRequest();
+                    processGetByColorRequest(d);
                     break;
                 case "5":
-//                    processGetByMileageRequest();
+//                    processGetByMileageRequest(d);
                     break;
                 case "6":
-//                    processGetByVehicleTypeRequest();
+//                    processGetByVehicleTypeRequest(d);
                     break;
                 case "7":
                     processGetAllVehiclesRequest(d);
                     break;
                 case "8":
-//                    processAddVehicleRequest();
+//                    processAddVehicleRequest(d);
                     break;
                 case "9":
-//                    processRemoveVehicleRequest();
+//                    processRemoveVehicleRequest(d);
                     break;
                 case "10":
-//                    processSellLeaseVehicleRequest();
+//                    processSellLeaseVehicleRequest(d);
                     break;
                 case "X":
                     exitApp = true;
@@ -165,34 +165,34 @@ public class UserInterface {
             System.out.println("No vehicles matched your provided make/model. Please try again.");
         }
     }
-//
-//    public void processGetByYearRequest() {
-//        promptInstructions("Enter vehicle year to search vehicles from:  " + dealership.getName());
-//        String vehicleYear = promptUser("Year: ");
-//        int year = Integer.parseInt(vehicleYear);
-//
-//        String parsedYear = String.valueOf(year);
-//
-//        //Checking length of String parsedYear is not greater than 4
-//        if (year != 0 && parsedYear.length() == 4) {
-//            List<Vehicle> vehicles = dealership.getVehiclesByYear(year);
-//            printVehicleList(vehicles);
-//        } else {
-//            System.out.println("No vehicles matched given year. Please try again.");
-//        }
-//    }
-//
-//    public void processGetByColorRequest() {
-//        promptInstructions("Enter vehicle color to search vehicles from:  " + dealership.getName());
-//        String vehicleColor = promptUser("Color: ");
-//
-//        if (!vehicleColor.isEmpty()) {
-//            List<Vehicle> vehicles = dealership.getVehiclesByColor(vehicleColor);
-//            printVehicleList(vehicles);
-//        } else {
-//            System.out.println("No vehicles found that match given color. Please try again.");
-//        }
-//    }
+
+    public void processGetByYearRequest(Dealership dealership) {
+        promptInstructions("Enter vehicle year to search vehicles from:  " + dealership.getName());
+        String vehicleYear = promptUser("Year: ");
+        int year = Integer.parseInt(vehicleYear);
+
+        String parsedYear = String.valueOf(year);
+
+        //Checking length of String parsedYear is not greater than 4
+        if (year != 0 && parsedYear.length() == 4) {
+            List<Vehicle> vehicles = vehicleManager.findVehiclesByYear(year);
+            printVehicleList(vehicles);
+        } else {
+            System.out.println("No vehicles matched given year. Please try again.");
+        }
+    }
+
+    public void processGetByColorRequest(Dealership dealership) {
+        promptInstructions("Enter vehicle color to search vehicles from:  " + dealership.getName());
+        String vehicleColor = promptUser("Color: ");
+
+        if (!vehicleColor.isEmpty()) {
+            List<Vehicle> vehicles = vehicleManager.findVehiclesByColor(vehicleColor);
+            printVehicleList(vehicles);
+        } else {
+            System.out.println("No vehicles found that match given color. Please try again.");
+        }
+    }
 //
 //    public void processGetByMileageRequest() {
 //        promptInstructions("Enter your desired mileage range to search vehicles from:  " + dealership.getName());

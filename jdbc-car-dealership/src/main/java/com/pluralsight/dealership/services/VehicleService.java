@@ -126,12 +126,74 @@ public class VehicleService implements VehicleDAO {
 
     @Override
     public List<Vehicle> findVehiclesByYear(int year) {
-        return List.of();
+        List<Vehicle> vehicles = new ArrayList<>();
+
+        Vehicle v;
+
+        try (Connection conn = dataSource.getConnection()) {
+            PreparedStatement statement = conn.prepareStatement("""
+                    SELECT * FROM vehicles
+                    WHERE year = ?
+                    """);
+            statement.setInt(1, year);
+            ResultSet rs = statement.executeQuery();
+
+            while (rs.next()) {
+                int vehicleVin = rs.getInt("vin");
+                int vehicleYear = rs.getInt("year");
+                String vehicleMake = rs.getString("make");
+                String vehicleModel = rs.getString("model");
+                String vehicleType = rs.getString("vehicleType");
+                String vehicleColor = rs.getString("color");
+                int vehicleMiles = rs.getInt("miles");
+                double vehiclePrice = rs.getDouble("price");
+
+                v = new Vehicle(vehicleVin, vehicleYear, vehicleMake, vehicleModel, vehicleType, vehicleColor, vehicleMiles, vehiclePrice);
+
+                vehicles.add(v);
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return vehicles;
     }
 
     @Override
     public List<Vehicle> findVehiclesByColor(String color) {
-        return List.of();
+        List<Vehicle> vehicles = new ArrayList<>();
+
+        Vehicle v;
+
+        try (Connection conn = dataSource.getConnection()) {
+            PreparedStatement statement = conn.prepareStatement("""
+                    SELECT * FROM vehicles
+                    WHERE color = ?
+                    """);
+            statement.setString(1, color);
+            ResultSet rs = statement.executeQuery();
+
+            while (rs.next()) {
+                int vehicleVin = rs.getInt("vin");
+                int vehicleYear = rs.getInt("year");
+                String vehicleMake = rs.getString("make");
+                String vehicleModel = rs.getString("model");
+                String vehicleType = rs.getString("vehicleType");
+                String vehicleColor = rs.getString("color");
+                int vehicleMiles = rs.getInt("miles");
+                double vehiclePrice = rs.getDouble("price");
+
+                v = new Vehicle(vehicleVin, vehicleYear, vehicleMake, vehicleModel, vehicleType, vehicleColor, vehicleMiles, vehiclePrice);
+
+                vehicles.add(v);
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return vehicles;
     }
 
     @Override
