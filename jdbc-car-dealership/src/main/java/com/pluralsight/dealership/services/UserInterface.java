@@ -14,7 +14,7 @@ import java.util.Scanner;
 
 public class UserInterface {
     //Config path to retrieve properties from database
-    private final String configFilePath = "src/main/resources/testDB.properties";
+    private final String configFilePath = "src/main/resources/config.properties";
 
     //Instance variable for DealershipService object
     private DealershipService dealershipManager;
@@ -22,7 +22,7 @@ public class UserInterface {
     //Instance variable for VehicleService object
     private VehicleService vehicleManager;
 
-    //Holds a Properties object for database credentials
+    //Holds a Properties object for grabbing database credentials
     private Properties properties;
 
     //Related to input from user
@@ -104,7 +104,7 @@ public class UserInterface {
                     processGetByPriceRequest(d);
                     break;
                 case "2":
-//                    processGetByMakeModelRequest();
+                    processGetByMakeModelRequest(d);
                     break;
                 case "3":
 //                    processGetByYearRequest();
@@ -152,19 +152,19 @@ public class UserInterface {
         List<Vehicle> vehicles = vehicleManager.findVehiclesByPriceRange(minPrice, maxPrice);
         printVehicleList(vehicles);
     }
-//
-//    public void processGetByMakeModelRequest() {
-//        promptInstructions("Enter vehicle make and model to search vehicles from:  " + dealership.getName());
-//        String vehicleMake = promptUser("Make: ");
-//        String vehicleModel = promptUser("Model: ");
-//
-//        if (!vehicleMake.isEmpty() && !vehicleModel.isEmpty()) {
-//            List<Vehicle> vehicles = dealership.getVehiclesByMakeModel(vehicleMake, vehicleModel);
-//            printVehicleList(vehicles);
-//        } else {
-//            System.out.println("No vehicles matched your provided make/model. Please try again.");
-//        }
-//    }
+
+    public void processGetByMakeModelRequest(Dealership dealership) {
+        promptInstructions("Enter vehicle make and model to search vehicles from:  " + dealership.getName());
+        String vehicleMake = promptUser("Make: ");
+        String vehicleModel = promptUser("Model: ");
+
+        if (!vehicleMake.isEmpty() && !vehicleModel.isEmpty()) {
+            List<Vehicle> vehicles = vehicleManager.findVehiclesByMakeModel(vehicleMake, vehicleModel);
+            printVehicleList(vehicles);
+        } else {
+            System.out.println("No vehicles matched your provided make/model. Please try again.");
+        }
+    }
 //
 //    public void processGetByYearRequest() {
 //        promptInstructions("Enter vehicle year to search vehicles from:  " + dealership.getName());
