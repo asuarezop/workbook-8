@@ -125,7 +125,7 @@ public class UserInterface {
                     processAddVehicleRequest(d);
                     break;
                 case "9":
-//                    processRemoveVehicleRequest(d);
+                    processRemoveVehicleRequest(d);
                     break;
                 case "10":
 //                    processSellLeaseVehicleRequest(d);
@@ -229,7 +229,7 @@ public class UserInterface {
         printVehicleList(vehicles);
     }
 
-    public void processAddVehicleRequest(Dealership dealership) throws IOException {
+    public void processAddVehicleRequest(Dealership dealership) {
         Vehicle v;
         promptInstructions("Enter new vehicle to add into:  " + dealership.getName());
 
@@ -253,22 +253,19 @@ public class UserInterface {
         v = new Vehicle(parsedUsedVehicleVIN, parsedUsedVehicleYear, usedVehicleMake, usedVehicleModel, usedVehicleType, usedVehicleColor, parsedUsedVehicleMileage, parsedUsedVehiclePrice);
 
         vehicleManager.addVehicleToInventory(v);
-//        DealershipService.saveDealership(dealership);
     }
 
-//    public void processRemoveVehicleRequest(Dealership dealership) throws IOException {
-//        Vehicle v;
-//        promptInstructions("Enter desired vehicle you wish to remove from:  " + dealership.getName());
-//        String vehicleVin = promptUser("VIN: ");
-//        int parsedVehicleVin = Integer.parseInt(vehicleVin);
-//
-//        //Creating a vehicle with only VIN for comparison with removeVehicle()
-//        v = new Vehicle(parsedVehicleVin);
-//
-//        dealership.removeVehicle(v);
-//        //Re-updating dealership inventory to reflect changes
-//        DealershipService.saveDealership(dealership);
-//    }
+    public void processRemoveVehicleRequest(Dealership dealership) {
+        Vehicle v;
+        promptInstructions("Enter desired vehicle you wish to remove from:  " + dealership.getName());
+        String vehicleVin = promptUser("VIN: ");
+        int parsedVehicleVin = Integer.parseInt(vehicleVin);
+
+        //Creating a vehicle with only VIN for comparison with removeVehicle()
+        v = new Vehicle(parsedVehicleVin);
+
+        vehicleManager.removeVehicleFromInventory(v);
+    }
 //
 //    public void processSellLeaseVehicleRequest() throws IOException {
 //        Vehicle v;

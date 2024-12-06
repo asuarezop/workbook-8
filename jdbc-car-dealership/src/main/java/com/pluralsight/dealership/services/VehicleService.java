@@ -272,7 +272,6 @@ public class VehicleService implements VehicleDAO {
 
     @Override
     public void addVehicleToInventory(Vehicle v) {
-
         try (Connection conn = dataSource.getConnection()) {
             PreparedStatement statement = conn.prepareStatement("""
                     INSERT INTO vehicles(vin, year, make, model, vehicleType, color, miles, price) VALUES
@@ -287,10 +286,11 @@ public class VehicleService implements VehicleDAO {
             statement.setInt(7, v.getMiles());
             statement.setDouble(8, v.getPrice());
 
+            //Executing and verifying INSERT query
             int rows = statement.executeUpdate();
-
             System.out.printf("Rows updated: %d\n", rows);
 
+            //Printing out vehicle to console
             UserInterface.printDealershipHeader();
             System.out.println(v);
 
@@ -304,6 +304,20 @@ public class VehicleService implements VehicleDAO {
 
     @Override
     public void removeVehicleFromInventory(Vehicle v) {
+        try (Connection conn = dataSource.getConnection()) {
+            PreparedStatement statement = conn.prepareStatement("""
+                    DELETE FROM vehicles WHERE vin = ?
+                    """);
+            statement.setInt(1, v.getVin());
 
+            //Executing and verifying DELETE query
+            int rows = statement.executeUpdate();
+            System.out.printf("Rows updated: %d\n", rows);
+
+            //Confirmation message
+            System.out.println(ColorCodes.SUCCESS + ColorCodes.ITALIC + "Vehicle removed from dealership." + ColorCodes.RESET);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
