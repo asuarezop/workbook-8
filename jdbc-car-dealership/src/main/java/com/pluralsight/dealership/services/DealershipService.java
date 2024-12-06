@@ -16,8 +16,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DealershipService implements DealershipDAO {
-    //String variable to hold inventory CSV file path
-    private static final String inventoryCSV = "src/main/resources/inventory.csv";
     private final DataSource dataSource;
 
     public DealershipService(DataSource dataSource) {
@@ -25,7 +23,7 @@ public class DealershipService implements DealershipDAO {
     }
 
     @Override
-    //Retrieving a Dealership object, load and read from inventory.csv
+    //Retrieving all dealerships from database
     public List<Dealership> findAllDealerships() {
         List<Dealership> dealerships = new ArrayList<>();
 
@@ -45,7 +43,7 @@ public class DealershipService implements DealershipDAO {
 
                 dealerships.add(d);
             }
-            //Returning back Dealerships
+
             return dealerships;
 
         } catch (SQLException e) {

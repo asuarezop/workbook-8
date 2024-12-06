@@ -13,8 +13,17 @@ import java.util.Properties;
 import java.util.Scanner;
 
 public class UserInterface {
+    //Config path to retrieve properties from database
+    private final String configFilePath = "src/main/resources/testDB.properties";
+
     //Instance variable for DealershipService object
     private DealershipService dealershipManager;
+
+    //Instance variable for VehicleService object
+    private VehicleService vehicleManager;
+
+    //Holds a Properties object for database credentials
+    private Properties properties;
 
     //Related to input from user
     static String userInput;
@@ -22,14 +31,11 @@ public class UserInterface {
     //Initializing scanner to read from terminal input
     static Scanner inputSc = new Scanner(System.in);
 
+    //Dealership selected by user based on id
     static int dealershipChoice;
 
     //Boolean condition to exit application screens
     static boolean exitApp = false;
-
-    private Properties properties;
-
-    final String configFilePath = "src/main/resources/testDB.properties";
 
     //init(): This method gets called first before any other methods are run inside main()
     private void init() {
@@ -50,11 +56,11 @@ public class UserInterface {
             dataSource.setPassword(password);
 
             DealershipService ds = new DealershipService(dataSource);
+            VehicleService vs = new VehicleService(dataSource);
 
-            //To get a new dealership object and have object initialized with returned dealership
+            //Initializing dealership and vehicle service classes
             this.dealershipManager = ds;
-
-//            System.out.printf("%s, %s, %s \n", url, user, password); //working
+            this.vehicleManager = vs;
 
         } catch (IOException e) {
             throw new RuntimeException();
@@ -86,16 +92,9 @@ public class UserInterface {
         do {
             init();
             System.out.println(homeScreenMenuHeader);
-            System.out.println("Enter dealership to search from: ");
-            dealershipChoice = inputSc.nextInt();
-            inputSc.nextLine();
-            Dealership d = dealershipManager.findDealershipById(dealershipChoice);
+            Dealership d = promptDealership();
 
             System.out.printf("%s, %s, %s\n", d.getName(), d.getAddress(), d.getPhone());
-//           List<Dealership> dealerships = dealershipManager.findAllDealerships();
-//           for (Dealership d: dealerships) {
-//               System.out.printf("%s, %s, %s\n", d.getName(), d.getAddress(), d.getPhone());
-//           }
             System.out.println(prompt);
             userInput = inputSc.nextLine().trim().toUpperCase();
 
@@ -119,7 +118,7 @@ public class UserInterface {
 //                    processGetByVehicleTypeRequest();
                     break;
                 case "7":
-//                    processGetAllVehiclesRequest();
+                    processGetAllVehiclesRequest();
                     break;
                 case "8":
 //                    processAddVehicleRequest();
@@ -139,8 +138,8 @@ public class UserInterface {
         } while (!exitApp);
     }
 
-//    //Other non-static methods to process user requests
-//    public void processGetByPriceRequest() {
+    //Other non-static methods to process user requests
+    public void processGetByPriceRequest() {
 //        promptInstructions("Enter your desired price range to search vehicles from:  " + dealership.getName());
 //
 //        String min = promptUser("Minimum value: ");
@@ -151,7 +150,7 @@ public class UserInterface {
 //
 ////        List<Vehicle> vehicles = dealership.getVehiclesByPrice(minPrice, maxPrice);
 //        printVehicleList(vehicles);
-//    }
+    }
 //
 //    public void processGetByMakeModelRequest() {
 //        promptInstructions("Enter vehicle make and model to search vehicles from:  " + dealership.getName());
@@ -222,12 +221,12 @@ public class UserInterface {
 //        }
 //    }
 //
-//    public void processGetAllVehiclesRequest() {
-//        promptInstructions("Inventory for:  " + dealership.getName());
-//
-//        List<Vehicle> vehicles = dealership.getAllVehicles();
-//        printVehicleList(vehicles);
-//    }
+    public void processGetAllVehiclesRequest() {
+        promptInstructions("Inventory for:  " + dealership.getName());
+
+        List<Vehicle> vehicles = dealership.getAllVehicles();
+        printVehicleList(vehicles);
+    }
 //
 //    public void processAddVehicleRequest() throws IOException {
 //        Vehicle v;
@@ -295,6 +294,15 @@ public class UserInterface {
 //            promptContractDetails("lease", v);
 //        }
 //    }
+
+    //Retrieves dealership from database that application will utilize
+    public Dealership promptDealership() {
+        System.out.println("Enter dealership to search from: ");
+        dealershipChoice = inputSc.nextInt();
+        inputSc.nextLine();
+
+        return dealershipManager.findDealershipById(dealershipChoice);
+    }
 
     //Retrieves user input from a prompt
     public String promptUser(String prompt) {

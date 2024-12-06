@@ -1,7 +1,7 @@
 package com.pluralsight.dealership.models;
 
 public class Vehicle {
-    private final int vin;
+    private int vin;
     private int year;
     private String make;
     private String model;

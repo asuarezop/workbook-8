@@ -1,9 +1,15 @@
 package com.pluralsight.dealership.services;
 
 import com.pluralsight.dealership.controllers.VehicleDAO;
+import com.pluralsight.dealership.models.Dealership;
 import com.pluralsight.dealership.models.Vehicle;
 
 import javax.sql.DataSource;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class VehicleService implements VehicleDAO {
@@ -15,7 +21,34 @@ public class VehicleService implements VehicleDAO {
 
     @Override
     public List<Vehicle> findAllVehicles() {
-        return List.of();
+        List<Vehicle> vehicles = new ArrayList<>();
+
+        Vehicle v;
+
+        try (Connection conn = dataSource.getConnection()) {
+            PreparedStatement statement = conn.prepareStatement("SELECT * FROM vehicles");
+            ResultSet rs = statement.executeQuery();
+
+            while (rs.next()) {
+                int vehicleVin = rs.getInt("vin");
+                int vehicleYear = rs.getInt("year");
+                String vehicleMake = rs.getString("make");
+                String vehicleModel = rs.getString("model");
+                String vehicleType = rs.getString("vehicleType");
+                String vehicleColor = rs.getString("color");
+                int vehicleMiles = rs.getInt("miles");
+                double vehiclePrice = rs.getDouble("price");
+
+                v = new Vehicle(vehicleVin, vehicleYear, vehicleMake, vehicleModel, vehicleType, vehicleColor, vehicleMiles, vehiclePrice);
+
+                vehicles.add(v);
+            }
+
+            return vehicles;
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
