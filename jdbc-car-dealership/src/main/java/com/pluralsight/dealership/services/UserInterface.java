@@ -252,7 +252,9 @@ public class UserInterface {
         String usedVehiclePrice = promptUser("Price: ");
         double parsedUsedVehiclePrice = Double.parseDouble(usedVehiclePrice);
 
-        v = new Vehicle(parsedUsedVehicleVIN, parsedUsedVehicleYear, usedVehicleMake, usedVehicleModel, usedVehicleType, usedVehicleColor, parsedUsedVehicleMileage, parsedUsedVehiclePrice);
+        boolean parsedHasVehicleSold = promptVehicleSold("Has vehicle been sold: ");
+
+        v = new Vehicle(parsedUsedVehicleVIN, parsedUsedVehicleYear, usedVehicleMake, usedVehicleModel, usedVehicleType, usedVehicleColor, parsedUsedVehicleMileage, parsedUsedVehiclePrice, parsedHasVehicleSold);
 
         vehicleManager.addVehicleToInventory(v);
     }
@@ -303,7 +305,7 @@ public class UserInterface {
         }
 
         //Prompting for user dealership choice
-        System.out.println("\nEnter dealership to search from: ");
+        promptInstructions("\nEnter dealership to search from:  ");
         dealershipChoice = inputSc.nextInt();
         inputSc.nextLine();
 
@@ -319,6 +321,11 @@ public class UserInterface {
     public void promptInstructions(String prompt) {
         String[] textDetails = prompt.split(": ");
         System.out.println(ColorCodes.LIGHT_BLUE + textDetails[0] + ColorCodes.ORANGE_BOLD + ColorCodes.ITALIC + textDetails[1] + ColorCodes.RESET);
+    }
+
+    public boolean promptVehicleSold(String prompt) {
+        String hasVehicleBeenSold = promptUser(prompt);
+        return hasVehicleBeenSold.equalsIgnoreCase("Yes");
     }
 
     public void promptContractDetails(String contractType, Vehicle vehicle) {
@@ -393,7 +400,7 @@ public class UserInterface {
     }
 
     public static void printDealershipHeader() {
-        String dealershipHeader = ColorCodes.LIGHT_BLUE_UNDERLINED + String.format("%-10s %-8s %-15s %-13s %-17s %-10s %-12s %-12s", "VIN", "Year", "Make", "Model", "Type", "Color", "Odometer", "Price") + ColorCodes.RESET;
+        String dealershipHeader = ColorCodes.LIGHT_BLUE_UNDERLINED + String.format("%-10s %-8s %-15s %-13s %-17s %-10s %-12s %-12s %-2s", "VIN", "Year", "Make", "Model", "Type", "Color", "Odometer", "Price", "Sold") + ColorCodes.RESET;
         System.out.println(dealershipHeader);
     }
 

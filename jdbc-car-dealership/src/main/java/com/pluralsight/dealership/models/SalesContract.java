@@ -1,6 +1,7 @@
 package com.pluralsight.dealership.models;
 
 public class SalesContract extends Contract {
+    private int id;
     private final double salesTax = 0.05;
     private final double recordingFee = 100.00;
     private final double processingFee = 0.00;
@@ -11,6 +12,8 @@ public class SalesContract extends Contract {
     public SalesContract(String date, String customerName, String customerEmail, Vehicle vehicleSold) {
         super(date, customerName, customerEmail, vehicleSold);
     }
+
+    public int getId() { return id; }
 
     public double getSalesTax() {
         return salesTax * getVehicleSold().getPrice();

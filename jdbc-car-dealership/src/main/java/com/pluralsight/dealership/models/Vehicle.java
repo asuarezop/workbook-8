@@ -9,13 +9,14 @@ public class Vehicle {
     private String color;
     private int miles;
     private double price;
+    private boolean sold;
 
     //Constructing a vehicle object with only a VIN
     public Vehicle(int vin) {
         this.vin = vin;
     }
 
-    public Vehicle(int vin, int year, String make, String model, String vehicleType, String color, int miles, double price) {
+    public Vehicle(int vin, int year, String make, String model, String vehicleType, String color, int miles, double price, boolean sold) {
         this.vin = vin;
         this.year = year;
         this.make = make;
@@ -24,6 +25,7 @@ public class Vehicle {
         this.color = color;
         this.miles = miles;
         this.price = price;
+        this.sold = sold;
     }
 
     //Getters
@@ -59,8 +61,12 @@ public class Vehicle {
         return price;
     }
 
+    public boolean isSold() {
+        return sold;
+    }
+
     @Override
     public String toString() {
-        return String.format("%-10s %-8s %-15s %-13s %-17s %-10s %-12d %5.2f", vin, year, make, model, vehicleType, color, miles, price);
+        return String.format("%-10s %-8s %-15s %-13s %-17s %-10s %-12d %5.2f %8s", vin, year, make, model, vehicleType, color, miles, price, (sold) ? "YES" : "NO");
     }
 }

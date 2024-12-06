@@ -1,6 +1,7 @@
 package com.pluralsight.dealership.models;
 
 public class LeaseContract extends Contract {
+    private int id;
     private final double expectedEndValue = 0.50;
     private final double leaseFee = 0.07;
     private double downPayment;
@@ -9,6 +10,8 @@ public class LeaseContract extends Contract {
     public LeaseContract(String date, String customerName, String customerEmail, Vehicle vehicleSold) {
         super(date, customerName, customerEmail, vehicleSold);
     }
+
+    public int getId() { return id; }
 
     public double getExpectedEndValue() {
         return expectedEndValue * getVehicleSold().getPrice();

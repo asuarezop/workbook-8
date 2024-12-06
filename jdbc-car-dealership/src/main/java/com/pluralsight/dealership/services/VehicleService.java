@@ -38,8 +38,9 @@ public class VehicleService implements VehicleDAO {
                 String vehicleColor = rs.getString("color");
                 int vehicleMiles = rs.getInt("miles");
                 double vehiclePrice = rs.getDouble("price");
+                boolean isVehicleSold = rs.getBoolean("sold");
 
-                v = new Vehicle(vehicleVin, vehicleYear, vehicleMake, vehicleModel, vehicleType, vehicleColor, vehicleMiles, vehiclePrice);
+                v = new Vehicle(vehicleVin, vehicleYear, vehicleMake, vehicleModel, vehicleType, vehicleColor, vehicleMiles, vehiclePrice, isVehicleSold);
 
                 vehicles.add(v);
             }
@@ -75,8 +76,9 @@ public class VehicleService implements VehicleDAO {
                 String vehicleColor = rs.getString("color");
                 int vehicleMiles = rs.getInt("miles");
                 double vehiclePrice = rs.getDouble("price");
+                boolean isVehicleSold = rs.getBoolean("sold");
 
-                v = new Vehicle(vehicleVin, vehicleYear, vehicleMake, vehicleModel, vehicleType, vehicleColor, vehicleMiles, vehiclePrice);
+                v = new Vehicle(vehicleVin, vehicleYear, vehicleMake, vehicleModel, vehicleType, vehicleColor, vehicleMiles, vehiclePrice, isVehicleSold);
 
                 vehicles.add(v);
             }
@@ -112,8 +114,9 @@ public class VehicleService implements VehicleDAO {
                 String vehicleColor = rs.getString("color");
                 int vehicleMiles = rs.getInt("miles");
                 double vehiclePrice = rs.getDouble("price");
+                boolean isVehicleSold = rs.getBoolean("sold");
 
-                v = new Vehicle(vehicleVin, vehicleYear, vehicleMake, vehicleModel, vehicleType, vehicleColor, vehicleMiles, vehiclePrice);
+                v = new Vehicle(vehicleVin, vehicleYear, vehicleMake, vehicleModel, vehicleType, vehicleColor, vehicleMiles, vehiclePrice, isVehicleSold);
 
                 vehicles.add(v);
             }
@@ -148,8 +151,9 @@ public class VehicleService implements VehicleDAO {
                 String vehicleColor = rs.getString("color");
                 int vehicleMiles = rs.getInt("miles");
                 double vehiclePrice = rs.getDouble("price");
+                boolean isVehicleSold = rs.getBoolean("sold");
 
-                v = new Vehicle(vehicleVin, vehicleYear, vehicleMake, vehicleModel, vehicleType, vehicleColor, vehicleMiles, vehiclePrice);
+                v = new Vehicle(vehicleVin, vehicleYear, vehicleMake, vehicleModel, vehicleType, vehicleColor, vehicleMiles, vehiclePrice, isVehicleSold);
 
                 vehicles.add(v);
             }
@@ -184,8 +188,9 @@ public class VehicleService implements VehicleDAO {
                 String vehicleColor = rs.getString("color");
                 int vehicleMiles = rs.getInt("miles");
                 double vehiclePrice = rs.getDouble("price");
+                boolean isVehicleSold = rs.getBoolean("sold");
 
-                v = new Vehicle(vehicleVin, vehicleYear, vehicleMake, vehicleModel, vehicleType, vehicleColor, vehicleMiles, vehiclePrice);
+                v = new Vehicle(vehicleVin, vehicleYear, vehicleMake, vehicleModel, vehicleType, vehicleColor, vehicleMiles, vehiclePrice, isVehicleSold);
 
                 vehicles.add(v);
             }
@@ -221,8 +226,9 @@ public class VehicleService implements VehicleDAO {
                 String vehicleColor = rs.getString("color");
                 int vehicleMiles = rs.getInt("miles");
                 double vehiclePrice = rs.getDouble("price");
+                boolean isVehicleSold = rs.getBoolean("sold");
 
-                v = new Vehicle(vehicleVin, vehicleYear, vehicleMake, vehicleModel, vehicleType, vehicleColor, vehicleMiles, vehiclePrice);
+                v = new Vehicle(vehicleVin, vehicleYear, vehicleMake, vehicleModel, vehicleType, vehicleColor, vehicleMiles, vehiclePrice, isVehicleSold);
 
                 vehicles.add(v);
             }
@@ -257,8 +263,9 @@ public class VehicleService implements VehicleDAO {
                 String vehicleColor = rs.getString("color");
                 int vehicleMiles = rs.getInt("miles");
                 double vehiclePrice = rs.getDouble("price");
+                boolean isVehicleSold = rs.getBoolean("sold");
 
-                v = new Vehicle(vehicleVin, vehicleYear, vehicleMake, vehicleModel, vehicleType, vehicleColor, vehicleMiles, vehiclePrice);
+                v = new Vehicle(vehicleVin, vehicleYear, vehicleMake, vehicleModel, vehicleType, vehicleColor, vehicleMiles, vehiclePrice, isVehicleSold);
 
                 vehicles.add(v);
             }
@@ -274,8 +281,8 @@ public class VehicleService implements VehicleDAO {
     public void addVehicleToInventory(Vehicle v) {
         try (Connection conn = dataSource.getConnection()) {
             PreparedStatement statement = conn.prepareStatement("""
-                    INSERT INTO vehicles(vin, year, make, model, vehicleType, color, miles, price) VALUES
-                    (?, ?, ?, ?, ?, ?, ?, ?)
+                    INSERT INTO vehicles(vin, year, make, model, vehicleType, color, miles, price, sold) VALUES
+                    (?, ?, ?, ?, ?, ?, ?, ?, ?)
                     """);
             statement.setInt(1, v.getVin());
             statement.setInt(2, v.getYear());
@@ -285,6 +292,7 @@ public class VehicleService implements VehicleDAO {
             statement.setString(6, v.getColor());
             statement.setInt(7, v.getMiles());
             statement.setDouble(8, v.getPrice());
+            statement.setBoolean(9, v.isSold());
 
             //Executing and verifying INSERT query
             int rows = statement.executeUpdate();
@@ -344,8 +352,9 @@ public class VehicleService implements VehicleDAO {
                 String vehicleColor = rs.getString("color");
                 int vehicleMiles = rs.getInt("miles");
                 double vehiclePrice = rs.getDouble("price");
+                boolean isVehicleSold = rs.getBoolean("sold");
 
-                v = new Vehicle(vehicleVin, vehicleYear, vehicleMake, vehicleModel, vehicleType, vehicleColor, vehicleMiles, vehiclePrice);
+                v = new Vehicle(vehicleVin, vehicleYear, vehicleMake, vehicleModel, vehicleType, vehicleColor, vehicleMiles, vehiclePrice, isVehicleSold);
 
                 return v;
             }
