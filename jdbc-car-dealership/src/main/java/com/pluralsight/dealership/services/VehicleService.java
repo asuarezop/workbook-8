@@ -2,7 +2,6 @@ package com.pluralsight.dealership.services;
 
 import JavaHelpers.ColorCodes;
 import com.pluralsight.dealership.controllers.VehicleDAO;
-import com.pluralsight.dealership.models.Dealership;
 import com.pluralsight.dealership.models.Vehicle;
 
 import javax.sql.DataSource;
@@ -319,5 +318,41 @@ public class VehicleService implements VehicleDAO {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @Override
+    public Vehicle findVehicleByVin(int vin) {
+        Vehicle v;
+
+        try (Connection conn = dataSource.getConnection()) {
+            PreparedStatement statement = conn.prepareStatement("""
+                    SELECT * FROM vehicles
+                    WHERE vin = ?
+                    """);
+            statement.setInt(1, vin);
+
+            ResultSet rs = statement.executeQuery();
+
+            if (rs.next()) {
+                int vehicleVin = rs.getInt("vin");
+                int vehicleYear = rs.getInt("year");
+                String vehicleMake = rs.getString("make");
+                String vehicleModel = rs.getString("model");
+                String vehicleType = rs.getString("vehicleType");
+                String vehicleColor = rs.getString("color");
+                int vehicleMiles = rs.getInt("miles");
+                double vehiclePrice = rs.getDouble("price");
+
+                v = new Vehicle(vehicleVin, vehicleYear, vehicleMake, vehicleModel, vehicleType, vehicleColor, vehicleMiles, vehiclePrice);
+
+                return v;
+            }
+
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return null;
     }
 }

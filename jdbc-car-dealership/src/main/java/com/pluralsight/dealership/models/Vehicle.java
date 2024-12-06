@@ -63,8 +63,4 @@ public class Vehicle {
     public String toString() {
         return String.format("%-10s %-8s %-15s %-13s %-17s %-10s %-12d %5.2f", vin, year, make, model, vehicleType, color, miles, price);
     }
-
-    public String toCSV() {
-        return String.format("%s|%s|%s|%s|%s|%s|%s|%.2f\n", vin, year, make, model, vehicleType, color, miles, price);
-    }
 }

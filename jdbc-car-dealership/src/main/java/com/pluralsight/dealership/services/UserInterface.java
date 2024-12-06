@@ -62,6 +62,8 @@ public class UserInterface {
             this.dealershipManager = ds;
             this.vehicleManager = vs;
 
+
+
         } catch (IOException e) {
             throw new RuntimeException();
         }
@@ -128,7 +130,7 @@ public class UserInterface {
                     processRemoveVehicleRequest(d);
                     break;
                 case "10":
-//                    processSellLeaseVehicleRequest(d);
+                    processSellLeaseVehicleRequest(d);
                     break;
                 case "X":
                     exitApp = true;
@@ -266,32 +268,30 @@ public class UserInterface {
 
         vehicleManager.removeVehicleFromInventory(v);
     }
-//
-//    public void processSellLeaseVehicleRequest() throws IOException {
-//        Vehicle v;
-//        promptInstructions("Would you like to sell or lease vehicle?:  ");
-//        String contractOption = promptUser("""
-//                [1] Sell
-//                [2] Lease
-//                """);
-//        int parsedContractOption = Integer.parseInt(contractOption);
-//        promptInstructions("Enter the VIN of the vehicle to put in sale/lease contract from:  " + dealership.getName());
-//        String selectedVehicle = promptUser("VIN: ");
-//        int parsedSelectedVehicle = Integer.parseInt(selectedVehicle);
-//
-//        v = dealership.getVehiclesByVin(parsedSelectedVehicle);
-//
-//        //Removing vehicle from dealership inventory
-//        dealership.removeVehicle(v);
-//        //Re-updating dealership inventory
-//        DealershipService.saveDealership(dealership);
-//
-//        if (parsedContractOption == 1) {
-//            promptContractDetails("sale" , v);
-//        } else if (parsedContractOption == 2) {
-//            promptContractDetails("lease", v);
-//        }
-//    }
+
+    public void processSellLeaseVehicleRequest(Dealership dealership) {
+        Vehicle v;
+        promptInstructions("Would you like to sell or lease vehicle?:  ");
+        String contractOption = promptUser("""
+                [1] Sell
+                [2] Lease
+                """);
+        int parsedContractOption = Integer.parseInt(contractOption);
+        promptInstructions("Enter the VIN of the vehicle to put in sale/lease contract from:  " + dealership.getName());
+        String selectedVehicle = promptUser("VIN: ");
+        int parsedSelectedVehicle = Integer.parseInt(selectedVehicle);
+
+        v = vehicleManager.findVehicleByVin(parsedSelectedVehicle);
+
+        //Removing vehicle from dealership inventory
+        vehicleManager.removeVehicleFromInventory(v);
+
+        if (parsedContractOption == 1) {
+            promptContractDetails("sale" , v);
+        } else if (parsedContractOption == 2) {
+            promptContractDetails("lease", v);
+        }
+    }
 
     //Retrieves dealership from database that application will utilize
     public Dealership promptDealership() {
