@@ -92,15 +92,16 @@ public class UserInterface {
         do {
             init();
             System.out.println(homeScreenMenuHeader);
-            Dealership d = promptDealership();
 
+            Dealership d = promptDealership();
             System.out.printf("%s, %s, %s\n", d.getName(), d.getAddress(), d.getPhone());
+
             System.out.println(prompt);
             userInput = inputSc.nextLine().trim().toUpperCase();
 
             switch (userInput) {
                 case "1":
-//                    processGetByPriceRequest();
+                    processGetByPriceRequest(d);
                     break;
                 case "2":
 //                    processGetByMakeModelRequest();
@@ -139,17 +140,17 @@ public class UserInterface {
     }
 
     //Other non-static methods to process user requests
-    public void processGetByPriceRequest() {
-//        promptInstructions("Enter your desired price range to search vehicles from:  " + dealership.getName());
-//
-//        String min = promptUser("Minimum value: ");
-//        double minPrice = Double.parseDouble(min);
-//
-//        String max = promptUser("Maximum value: ");
-//        double maxPrice = Double.parseDouble(max);
-//
-////        List<Vehicle> vehicles = dealership.getVehiclesByPrice(minPrice, maxPrice);
-//        printVehicleList(vehicles);
+    public void processGetByPriceRequest(Dealership dealership) {
+        promptInstructions("Enter your desired price range to search vehicles from:  " + dealership.getName());
+
+        String min = promptUser("Minimum value: ");
+        double minPrice = Double.parseDouble(min);
+
+        String max = promptUser("Maximum value: ");
+        double maxPrice = Double.parseDouble(max);
+
+        List<Vehicle> vehicles = vehicleManager.findVehiclesByPriceRange(minPrice, maxPrice);
+        printVehicleList(vehicles);
     }
 //
 //    public void processGetByMakeModelRequest() {
