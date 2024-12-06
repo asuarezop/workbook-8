@@ -118,7 +118,7 @@ public class UserInterface {
 //                    processGetByVehicleTypeRequest();
                     break;
                 case "7":
-                    processGetAllVehiclesRequest();
+                    processGetAllVehiclesRequest(d);
                     break;
                 case "8":
 //                    processAddVehicleRequest();
@@ -221,10 +221,10 @@ public class UserInterface {
 //        }
 //    }
 //
-    public void processGetAllVehiclesRequest() {
+    public void processGetAllVehiclesRequest(Dealership dealership) {
         promptInstructions("Inventory for:  " + dealership.getName());
 
-        List<Vehicle> vehicles = dealership.getAllVehicles();
+        List<Vehicle> vehicles = vehicleManager.findAllVehicles();
         printVehicleList(vehicles);
     }
 //
