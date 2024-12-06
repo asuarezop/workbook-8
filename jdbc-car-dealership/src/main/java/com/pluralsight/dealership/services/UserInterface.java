@@ -76,7 +76,7 @@ public class UserInterface {
                 =================================
                 """;
         String prompt = """
-                Please select what type of request to filter from dealership inventory:
+                \nPlease select what type of request to filter from dealership inventory:
                 
                 [1] Price - filter vehicles within a price range
                 [2] Make Model - filter vehicles by make/model
@@ -95,8 +95,8 @@ public class UserInterface {
             init();
             System.out.println(homeScreenMenuHeader);
 
+            //Grabbing selected dealership from user
             Dealership d = promptDealership();
-            System.out.printf("%s, %s, %s\n", d.getName(), d.getAddress(), d.getPhone());
 
             System.out.println(prompt);
             userInput = inputSc.nextLine().trim().toUpperCase();
@@ -293,9 +293,17 @@ public class UserInterface {
         }
     }
 
-    //Retrieves dealership from database that application will utilize
+    //Retrieves dealerships from database
     public Dealership promptDealership() {
-        System.out.println("Enter dealership to search from: ");
+        //Querying for all dealerships
+        List<Dealership> dealerships = dealershipManager.findAllDealerships();
+
+        for (Dealership d: dealerships) {
+            System.out.printf("%d) %s, %s, %s \n", d.getId(), d.getName(), d.getAddress(), d.getPhone());
+        }
+
+        //Prompting for user dealership choice
+        System.out.println("\nEnter dealership to search from: ");
         dealershipChoice = inputSc.nextInt();
         inputSc.nextLine();
 

@@ -80,6 +80,7 @@ public class VehicleService implements VehicleDAO {
 
                 vehicles.add(v);
             }
+
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -315,6 +316,7 @@ public class VehicleService implements VehicleDAO {
 
             //Confirmation message
             System.out.println(ColorCodes.SUCCESS + ColorCodes.ITALIC + "Vehicle removed from dealership." + ColorCodes.RESET);
+
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -347,7 +349,6 @@ public class VehicleService implements VehicleDAO {
 
                 return v;
             }
-
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
