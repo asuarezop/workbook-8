@@ -122,7 +122,7 @@ public class UserInterface {
                     processGetAllVehiclesRequest(d);
                     break;
                 case "8":
-//                    processAddVehicleRequest(d);
+                    processAddVehicleRequest(d);
                     break;
                 case "9":
 //                    processRemoveVehicleRequest(d);
@@ -228,35 +228,35 @@ public class UserInterface {
         List<Vehicle> vehicles = vehicleManager.findAllVehicles();
         printVehicleList(vehicles);
     }
-//
-//    public void processAddVehicleRequest() throws IOException {
-//        Vehicle v;
-//        promptInstructions("Enter new vehicle to add into:  " + dealership.getName());
-//
-//        String usedVehicleVIN = promptUser("VIN: ");
-//        int parsedUsedVehicleVIN = Integer.parseInt(usedVehicleVIN);
-//
-//        String usedVehicleYear = promptUser("Year: ");
-//        int parsedUsedVehicleYear = Integer.parseInt(usedVehicleYear);
-//
-//        String usedVehicleMake = promptUser("Make: ");
-//        String usedVehicleModel = promptUser("Model: ");
-//        String usedVehicleType = promptUser("Type: ");
-//        String usedVehicleColor = promptUser("Color: ");
-//
-//        String usedVehicleMileage = promptUser("Mileage: ");
-//        int parsedUsedVehicleMileage = Integer.parseInt(usedVehicleMileage);
-//
-//        String usedVehiclePrice = promptUser("Price: ");
-//        double parsedUsedVehiclePrice = Double.parseDouble(usedVehiclePrice);
-//
-//        v = new Vehicle(parsedUsedVehicleVIN, parsedUsedVehicleYear, usedVehicleMake, usedVehicleModel, usedVehicleType, usedVehicleColor, parsedUsedVehicleMileage, parsedUsedVehiclePrice);
-//
-//        dealership.addVehicle(v);
+
+    public void processAddVehicleRequest(Dealership dealership) throws IOException {
+        Vehicle v;
+        promptInstructions("Enter new vehicle to add into:  " + dealership.getName());
+
+        String usedVehicleVIN = promptUser("VIN: ");
+        int parsedUsedVehicleVIN = Integer.parseInt(usedVehicleVIN);
+
+        String usedVehicleYear = promptUser("Year: ");
+        int parsedUsedVehicleYear = Integer.parseInt(usedVehicleYear);
+
+        String usedVehicleMake = promptUser("Make: ");
+        String usedVehicleModel = promptUser("Model: ");
+        String usedVehicleType = promptUser("Type: ");
+        String usedVehicleColor = promptUser("Color: ");
+
+        String usedVehicleMileage = promptUser("Mileage: ");
+        int parsedUsedVehicleMileage = Integer.parseInt(usedVehicleMileage);
+
+        String usedVehiclePrice = promptUser("Price: ");
+        double parsedUsedVehiclePrice = Double.parseDouble(usedVehiclePrice);
+
+        v = new Vehicle(parsedUsedVehicleVIN, parsedUsedVehicleYear, usedVehicleMake, usedVehicleModel, usedVehicleType, usedVehicleColor, parsedUsedVehicleMileage, parsedUsedVehiclePrice);
+
+        vehicleManager.addVehicleToInventory(v);
 //        DealershipService.saveDealership(dealership);
-//    }
-//
-//    public void processRemoveVehicleRequest() throws IOException {
+    }
+
+//    public void processRemoveVehicleRequest(Dealership dealership) throws IOException {
 //        Vehicle v;
 //        promptInstructions("Enter desired vehicle you wish to remove from:  " + dealership.getName());
 //        String vehicleVin = promptUser("VIN: ");

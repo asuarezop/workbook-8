@@ -1,5 +1,6 @@
 package com.pluralsight.dealership.services;
 
+import JavaHelpers.ColorCodes;
 import com.pluralsight.dealership.controllers.VehicleDAO;
 import com.pluralsight.dealership.models.Dealership;
 import com.pluralsight.dealership.models.Vehicle;
@@ -272,6 +273,33 @@ public class VehicleService implements VehicleDAO {
     @Override
     public void addVehicleToInventory(Vehicle v) {
 
+        try (Connection conn = dataSource.getConnection()) {
+            PreparedStatement statement = conn.prepareStatement("""
+                    INSERT INTO vehicles(vin, year, make, model, vehicleType, color, miles, price) VALUES
+                    (?, ?, ?, ?, ?, ?, ?, ?)
+                    """);
+            statement.setInt(1, v.getVin());
+            statement.setInt(2, v.getYear());
+            statement.setString(3, v.getMake());
+            statement.setString(4, v.getModel());
+            statement.setString(5, v.getVehicleType());
+            statement.setString(6, v.getColor());
+            statement.setInt(7, v.getMiles());
+            statement.setDouble(8, v.getPrice());
+
+            int rows = statement.executeUpdate();
+
+            System.out.printf("Rows updated: %d\n", rows);
+
+            UserInterface.printDealershipHeader();
+            System.out.println(v);
+
+            //Confirmation message
+            System.out.println(ColorCodes.SUCCESS + ColorCodes.ITALIC + "Vehicle was added to inventory!" + ColorCodes.RESET);
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
