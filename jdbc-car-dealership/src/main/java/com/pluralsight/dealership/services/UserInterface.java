@@ -7,7 +7,9 @@ import org.apache.commons.dbcp2.BasicDataSource;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 import java.util.Properties;
 import java.util.Scanner;
@@ -16,11 +18,11 @@ public class UserInterface {
     //Config path to retrieve properties from database
     private final String configFilePath = "src/main/resources/config.properties";
 
-    //Instance variable for DealershipService object
+    //Data manager service objects
     private DealershipService dealershipManager;
-
-    //Instance variable for VehicleService object
     private VehicleService vehicleManager;
+    private SalesContractService salesManager;
+    private LeaseContractService leaseManager;
 
     //Holds a Properties object for grabbing database credentials
     private Properties properties;
@@ -57,12 +59,14 @@ public class UserInterface {
 
             DealershipService ds = new DealershipService(dataSource);
             VehicleService vs = new VehicleService(dataSource);
+            SalesContractService sc = new SalesContractService(dataSource);
+            LeaseContractService lc = new LeaseContractService(dataSource);
 
-            //Initializing dealership and vehicle service classes
+            //Initializing service classes
             this.dealershipManager = ds;
             this.vehicleManager = vs;
-
-
+            this.salesManager = sc;
+            this.leaseManager = lc;
 
         } catch (IOException e) {
             throw new RuntimeException();
@@ -285,9 +289,6 @@ public class UserInterface {
 
         v = vehicleManager.findVehicleByVin(parsedSelectedVehicle);
 
-        //Removing vehicle from dealership inventory
-        vehicleManager.removeVehicleFromInventory(v);
-
         if (parsedContractOption == 1) {
             promptContractDetails("sale" , v);
         } else if (parsedContractOption == 2) {
@@ -331,29 +332,34 @@ public class UserInterface {
     public void promptContractDetails(String contractType, Vehicle vehicle) {
         SalesContract vehicleSale;
         LeaseContract vehicleLease;
-        String[] contractPrompts = {"Enter the date associated with the " + contractType + ":  ", "Enter the customer name associated with the " + contractType + ":  ", "Enter the customer email associated with the " + contractType + ":  ", "Enter whether the vehicle was financed or not:  ", "How much would you like to put towards down payment?:  "};
-        String[] userInputPrompts = {"Date: ", "Customer name: ", "Customer email: ", """
+        LocalDateTime contractDate = LocalDateTime.now();
+        String[] contractPrompts = {"Enter the id for this contract:  ", "Enter the date associated with the " + contractType + ":  ", "Enter the customer name associated with the " + contractType + ":  ", "Enter the customer email associated with the " + contractType + ":  ", "Enter whether the vehicle was financed or not:  ", "How much would you like to put towards down payment?:  "};
+        String[] userInputPrompts = {"ID: ", "Date: ", "Customer name: ", "Customer email: ", """
                     [1] Yes
                     [2] No
                     """, "Down payment amount: "};
 
-        //Prompting for date
-        promptInstructions(contractPrompts[0]);
-        String dateOfContract = promptUser(userInputPrompts[0]);
+//        //Prompting for contract ID
+//        promptInstructions(contractPrompts[0]);
+//        int contractId = Integer.parseInt(promptUser(userInputPrompts[0]));
+
+//        //Prompting for date
+//        promptInstructions(contractPrompts[1]);
+        LocalDate dateOfContract = LocalDate.parse(DateHandler.getContractDate(contractDate));
 
         //Prompting for customer name
-        promptInstructions(contractPrompts[1]);
-        String customerName = promptUser(userInputPrompts[1]);
+        promptInstructions(contractPrompts[2]);
+        String customerName = promptUser(userInputPrompts[2]);
 
         //Prompting for customer email
-        promptInstructions(contractPrompts[2]);
-        String customerEmail = promptUser(userInputPrompts[2]);
+        promptInstructions(contractPrompts[3]);
+        String customerEmail = promptUser(userInputPrompts[3]);
 
         if (contractType.equals("sale")) {
 
             //Prompting to determine if vehicle was financed
-            promptInstructions(contractPrompts[3]);
-            String financedOption = promptUser(userInputPrompts[3]);
+            promptInstructions(contractPrompts[4]);
+            String financedOption = promptUser(userInputPrompts[4]);
 
             //Passing in sales data from the user into new SalesContract object
             vehicleSale = new SalesContract(dateOfContract, customerName, customerEmail, vehicle);
@@ -363,8 +369,8 @@ public class UserInterface {
                 vehicleSale.setFinanced(true);
 
                 //Prompting to determine down payment for vehicle
-                promptInstructions(contractPrompts[4]);
-                double downPayment = Double.parseDouble(promptUser(userInputPrompts[4]));
+                promptInstructions(contractPrompts[5]);
+                double downPayment = Double.parseDouble(promptUser(userInputPrompts[5]));
 
                 //Setting down payment variable to user's amount for SalesContract
                 vehicleSale.setDownPayment(downPayment);
@@ -377,22 +383,22 @@ public class UserInterface {
                 vehicleSale.setDownPayment(0);
             }
 
-            //Saving SalesContract data to contacts.csv file
-            ContractDataManager.saveContract(vehicleSale);
+            //Saving SalesContract data to database
+            salesManager.saveSalesContract(vehicleSale);
 
         } else if (contractType.equals("lease")) {
             //Passing in lease data from the user into new LeaseContract object
             vehicleLease = new LeaseContract(dateOfContract, customerName, customerEmail, vehicle);
 
             //Prompting to determine down payment for vehicle
-            promptInstructions(contractPrompts[4]);
-            double downPayment = Double.parseDouble(promptUser(userInputPrompts[4]));
+            promptInstructions(contractPrompts[5]);
+            double downPayment = Double.parseDouble(promptUser(userInputPrompts[5]));
 
             //Setting down payment variable to user's amount for LeaseContract
             vehicleLease.setDownPayment(downPayment);
 
-            //Saving LeaseContract data to contacts.csv file
-            ContractDataManager.saveContract(vehicleLease);
+            //Saving LeaseContract data to database
+            leaseManager.saveLeaseContract(vehicleLease);
         }
 
         //Confirmation message

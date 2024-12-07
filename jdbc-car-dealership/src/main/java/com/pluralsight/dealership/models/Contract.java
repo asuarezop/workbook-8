@@ -1,43 +1,33 @@
 package com.pluralsight.dealership.models;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Date;
+
 //Abstract Contract Class - cannot be used to instantiate a new object
 public abstract class Contract {
-    private String date;
+    private LocalDate date;
     private String customerName;
     private String customerEmail;
-    private Vehicle vehicleSold; //not a boolean, the actual vehicle object that user chose
-    private double totalPrice;
-    private double monthlyPayment;
+    private Vehicle vehicleSold;
 
-    protected Contract(String date, String customerName, String customerEmail, Vehicle vehicleSold) {
+    protected Contract(LocalDate date, String customerName, String customerEmail, Vehicle vehicleSold) {
         this.date = date;
         this.customerName = customerName;
         this.customerEmail = customerEmail;
         this.vehicleSold = vehicleSold;
     }
 
-    public String getDate() {
+    public LocalDate getDate() {
         return date;
-    }
-
-    public void setDate(String date) {
-        this.date = date;
     }
 
     public String getCustomerName() {
         return customerName;
     }
 
-    public void setCustomerName(String customerName) {
-        this.customerName = customerName;
-    }
-
     public String getCustomerEmail() {
         return customerEmail;
-    }
-
-    public void setCustomerEmail(String customerEmail) {
-        this.customerEmail = customerEmail;
     }
 
     public Vehicle getVehicleSold() {
