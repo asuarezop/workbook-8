@@ -9,6 +9,11 @@ public class Dealership {
     private String phone;
     private final ArrayList<Vehicle> inventory = new ArrayList<>();
 
+    //Constructor for a dealership with only an id
+    public Dealership(int id) {
+        this.id = id;
+    }
+
     //Constructor to create a new Dealership object
     public Dealership(int id, String name, String address, String phone) {
         this.id = id;
@@ -40,6 +45,6 @@ public class Dealership {
 
     @Override
     public String toString() {
-        return String.format("%-10d %-12s %-15s %-12s", id, name, address, phone);
+        return String.format("%-10d %-8s %-30s %-20s", id, name, address, phone);
     }
 }

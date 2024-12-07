@@ -70,6 +70,26 @@ public class DealershipService implements DealershipDAO {
         }
     }
 
+    @Override
+    public void removeDealership(Dealership d) {
+        try (Connection conn = dataSource.getConnection()) {
+            PreparedStatement statement = conn.prepareStatement("""
+                    DELETE FROM dealerships WHERE id = ?
+                    """);
+            statement.setInt(1, d.getId());
+
+            //Executing and verifying DELETE query
+            int rows = statement.executeUpdate();
+            System.out.printf("Rows updated: %d\n", rows);
+
+            //Confirmation message
+            System.out.println(ColorCodes.SUCCESS + ColorCodes.ITALIC + "Dealership removed from database." + ColorCodes.RESET);
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 
     @Override
     public Dealership findDealershipById(int id) {

@@ -72,7 +72,7 @@ public class UserInterface {
         }
     }
 
-    public void showHomeScreen() throws IOException {
+    public void showHomeScreen() {
         String homeScreenMenuHeader = """
                 =================================
                 |      DEALERSHIP APP (HOME)    |
@@ -93,6 +93,7 @@ public class UserInterface {
                 [10] Sell/Lease Vehicle - select vehicle to put up for sale/lease in a contract
                 [11] Update Vehicle - updates vehicle sale status from contract
                 [12] Add Dealership - adds a new dealership to database
+                [13] Remove Dealership - removes a dealership from database
                 [X] Exit Application - quits running application
                 """;
 
@@ -142,6 +143,9 @@ public class UserInterface {
                     break;
                 case "12":
                     processAddDealershipRequest();
+                    break;
+                case "13":
+                    processRemoveDealershipRequest();
                     break;
                 case "X":
                     exitApp = true;
@@ -337,6 +341,18 @@ public class UserInterface {
         dealershipManager.saveDealership(d);
     }
 
+    public void processRemoveDealershipRequest() {
+        Dealership d;
+
+        promptInstructions("Enter the dealership you wish to remove:  ");
+        String dealershipId = promptUser("Dealership ID: ");
+        int parsedDealershipId = Integer.parseInt(dealershipId);
+
+        d = new Dealership(parsedDealershipId);
+
+        dealershipManager.removeDealership(d);
+    }
+
     //Retrieves dealerships from database
     public Dealership promptDealership() {
         //Querying for all dealerships
@@ -441,7 +457,7 @@ public class UserInterface {
     }
 
     public static void printDealershipHeader() {
-        String dealershipHeader = ColorCodes.ORANGE_UNDERLINED + String.format("%-8s %-8s %-15s %-13s", "ID", "Name", "Address", "Phone") + ColorCodes.RESET;
+        String dealershipHeader = ColorCodes.ORANGE_UNDERLINED + String.format("%-8s %-5s %-25s %-30s", "ID", "Name", "Address", "Phone") + ColorCodes.RESET;
         System.out.println(dealershipHeader);
     }
 
