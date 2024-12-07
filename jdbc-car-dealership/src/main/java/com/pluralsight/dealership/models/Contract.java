@@ -1,8 +1,6 @@
 package com.pluralsight.dealership.models;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.Date;
 
 //Abstract Contract Class - cannot be used to instantiate a new object
 public abstract class Contract {

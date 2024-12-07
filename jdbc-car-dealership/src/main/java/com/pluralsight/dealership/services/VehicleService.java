@@ -331,6 +331,29 @@ public class VehicleService implements VehicleDAO {
     }
 
     @Override
+    public void updateVehicleFromInventory(boolean status, Vehicle v) {
+        try (Connection conn = dataSource.getConnection()) {
+            PreparedStatement statement = conn.prepareStatement("""
+                    UPDATE vehicles
+                    SET sold = ?
+                    WHERE vin = ?
+                    """);
+
+            statement.setBoolean(1, status);
+            statement.setInt(2, v.getVin());
+
+            int rows = statement.executeUpdate();
+            System.out.printf("Rows updated: %d\n", rows);
+
+            //Confirmation message
+            System.out.println(ColorCodes.SUCCESS + ColorCodes.ITALIC + "Vehicle status was updated." + ColorCodes.RESET);
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
     public Vehicle findVehicleByVin(int vin) {
         Vehicle v;
 

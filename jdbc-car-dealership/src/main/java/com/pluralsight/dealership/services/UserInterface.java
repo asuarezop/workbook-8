@@ -92,6 +92,7 @@ public class UserInterface {
                 [8] Add Vehicle - adds a new vehicle to inventory
                 [9] Remove Vehicle - removes a vehicle from inventory
                 [10] Sell/Lease Vehicle - select vehicle to put up for sale/lease in a contract
+                [11] Update Vehicle - updates vehicle sale status from inventory
                 [X] Exit Application - quits running application
                 """;
 
@@ -135,6 +136,9 @@ public class UserInterface {
                     break;
                 case "10":
                     processSellLeaseVehicleRequest(d);
+                    break;
+                case "11":
+                    processUpdateVehicleInvRequest(d);
                     break;
                 case "X":
                     exitApp = true;
@@ -326,40 +330,34 @@ public class UserInterface {
 
     public boolean promptVehicleSold(String prompt) {
         String hasVehicleBeenSold = promptUser(prompt);
-        return hasVehicleBeenSold.equalsIgnoreCase("Yes");
+        return hasVehicleBeenSold.equalsIgnoreCase("Yes") | hasVehicleBeenSold.equals("1");
     }
 
     public void promptContractDetails(String contractType, Vehicle vehicle) {
         SalesContract vehicleSale;
         LeaseContract vehicleLease;
         LocalDateTime contractDate = LocalDateTime.now();
-        String[] contractPrompts = {"Enter the id for this contract:  ", "Enter the date associated with the " + contractType + ":  ", "Enter the customer name associated with the " + contractType + ":  ", "Enter the customer email associated with the " + contractType + ":  ", "Enter whether the vehicle was financed or not:  ", "How much would you like to put towards down payment?:  "};
-        String[] userInputPrompts = {"ID: ", "Date: ", "Customer name: ", "Customer email: ", """
+        String[] contractPrompts = {"Enter the customer name associated with the " + contractType + ":  ", "Enter the customer email associated with the " + contractType + ":  ", "Enter whether the vehicle was financed or not:  ", "How much would you like to put towards down payment?:  "};
+        String[] userInputPrompts = {"Customer name: ", "Customer email: ", """
                     [1] Yes
                     [2] No
                     """, "Down payment amount: "};
 
-//        //Prompting for contract ID
-//        promptInstructions(contractPrompts[0]);
-//        int contractId = Integer.parseInt(promptUser(userInputPrompts[0]));
-
-//        //Prompting for date
-//        promptInstructions(contractPrompts[1]);
+        //Retrieving LocalDate for contract
         LocalDate dateOfContract = LocalDate.parse(DateHandler.getContractDate(contractDate));
 
         //Prompting for customer name
-        promptInstructions(contractPrompts[2]);
-        String customerName = promptUser(userInputPrompts[2]);
+        promptInstructions(contractPrompts[0]);
+        String customerName = promptUser(userInputPrompts[0]);
 
         //Prompting for customer email
-        promptInstructions(contractPrompts[3]);
-        String customerEmail = promptUser(userInputPrompts[3]);
+        promptInstructions(contractPrompts[1]);
+        String customerEmail = promptUser(userInputPrompts[1]);
 
         if (contractType.equals("sale")) {
-
             //Prompting to determine if vehicle was financed
-            promptInstructions(contractPrompts[4]);
-            String financedOption = promptUser(userInputPrompts[4]);
+            promptInstructions(contractPrompts[2]);
+            String financedOption = promptUser(userInputPrompts[2]);
 
             //Passing in sales data from the user into new SalesContract object
             vehicleSale = new SalesContract(dateOfContract, customerName, customerEmail, vehicle);
@@ -369,8 +367,8 @@ public class UserInterface {
                 vehicleSale.setFinanced(true);
 
                 //Prompting to determine down payment for vehicle
-                promptInstructions(contractPrompts[5]);
-                double downPayment = Double.parseDouble(promptUser(userInputPrompts[5]));
+                promptInstructions(contractPrompts[3]);
+                double downPayment = Double.parseDouble(promptUser(userInputPrompts[3]));
 
                 //Setting down payment variable to user's amount for SalesContract
                 vehicleSale.setDownPayment(downPayment);
@@ -391,8 +389,8 @@ public class UserInterface {
             vehicleLease = new LeaseContract(dateOfContract, customerName, customerEmail, vehicle);
 
             //Prompting to determine down payment for vehicle
-            promptInstructions(contractPrompts[5]);
-            double downPayment = Double.parseDouble(promptUser(userInputPrompts[5]));
+            promptInstructions(contractPrompts[3]);
+            double downPayment = Double.parseDouble(promptUser(userInputPrompts[3]));
 
             //Setting down payment variable to user's amount for LeaseContract
             vehicleLease.setDownPayment(downPayment);
@@ -403,6 +401,23 @@ public class UserInterface {
 
         //Confirmation message
         System.out.println(ColorCodes.SUCCESS + ColorCodes.ITALIC + "Contract has been saved." + ColorCodes.RESET);
+    }
+
+    public void processUpdateVehicleInvRequest(Dealership dealership) {
+        Vehicle v;
+        promptInstructions("Enter the VIN of the vehicle to update from:  " + dealership.getName());
+        String selectedVehicle = promptUser("VIN: ");
+        int parsedSelectedVehicle = Integer.parseInt(selectedVehicle);
+
+        v = vehicleManager.findVehicleByVin(parsedSelectedVehicle);
+
+        promptInstructions("Confirm whether vehicle was sold:  ");
+        boolean vehicleStatus = promptVehicleSold("""
+                [1] Yes
+                [2] No
+                """);
+
+        vehicleManager.updateVehicleFromInventory(vehicleStatus, v);
     }
 
     public static void printDealershipHeader() {
