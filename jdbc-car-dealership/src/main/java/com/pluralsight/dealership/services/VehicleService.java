@@ -22,7 +22,6 @@ public class VehicleService implements VehicleDAO {
     @Override
     public List<Vehicle> findAllVehicles() {
         List<Vehicle> vehicles = new ArrayList<>();
-
         Vehicle v;
 
         try (Connection conn = dataSource.getConnection()) {
@@ -44,7 +43,6 @@ public class VehicleService implements VehicleDAO {
     @Override
     public List<Vehicle> findVehiclesByPriceRange(double minPrice, double maxPrice) {
         List<Vehicle> vehicles = new ArrayList<>();
-
         Vehicle v;
 
         try (Connection conn = dataSource.getConnection()) {
@@ -71,7 +69,6 @@ public class VehicleService implements VehicleDAO {
     @Override
     public List<Vehicle> findVehiclesByMakeModel(String make, String model) {
         List<Vehicle> vehicles = new ArrayList<>();
-
         Vehicle v;
 
         try (Connection conn = dataSource.getConnection()) {
@@ -98,7 +95,6 @@ public class VehicleService implements VehicleDAO {
     @Override
     public List<Vehicle> findVehiclesByYear(int year) {
         List<Vehicle> vehicles = new ArrayList<>();
-
         Vehicle v;
 
         try (Connection conn = dataSource.getConnection()) {
@@ -124,7 +120,6 @@ public class VehicleService implements VehicleDAO {
     @Override
     public List<Vehicle> findVehiclesByColor(String color) {
         List<Vehicle> vehicles = new ArrayList<>();
-
         Vehicle v;
 
         try (Connection conn = dataSource.getConnection()) {
@@ -150,7 +145,6 @@ public class VehicleService implements VehicleDAO {
     @Override
     public List<Vehicle> findVehiclesByMileage(int minMiles, int maxMiles) {
         List<Vehicle> vehicles = new ArrayList<>();
-
         Vehicle v;
 
         try (Connection conn = dataSource.getConnection()) {
@@ -177,7 +171,6 @@ public class VehicleService implements VehicleDAO {
     @Override
     public List<Vehicle> findVehiclesByVehicleType(String type) {
         List<Vehicle> vehicles = new ArrayList<>();
-
         Vehicle v;
 
         try (Connection conn = dataSource.getConnection()) {
@@ -222,7 +215,7 @@ public class VehicleService implements VehicleDAO {
             System.out.printf("Rows updated: %d\n", rows);
 
             //Printing out vehicle to console
-            UserInterface.printDealershipHeader();
+            UserInterface.printVehicleHeader();
             System.out.println(v);
 
             //Confirmation message

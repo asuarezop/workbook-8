@@ -18,7 +18,9 @@ public class Dealership {
     }
 
     //Getters & Setters
-    public int getId() { return id; }
+    public int getId() {
+        return id;
+    }
 
     public String getName() {
         return name;
@@ -38,6 +40,6 @@ public class Dealership {
 
     @Override
     public String toString() {
-        return String.format("%-12s, %-15s, %-12s", name, address, phone);
+        return String.format("%-10d %-12s %-15s %-12s", id, name, address, phone);
     }
 }

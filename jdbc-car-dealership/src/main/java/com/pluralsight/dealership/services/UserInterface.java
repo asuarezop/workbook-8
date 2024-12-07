@@ -9,7 +9,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 import java.util.Properties;
 import java.util.Scanner;
@@ -92,7 +91,8 @@ public class UserInterface {
                 [8] Add Vehicle - adds a new vehicle to inventory
                 [9] Remove Vehicle - removes a vehicle from inventory
                 [10] Sell/Lease Vehicle - select vehicle to put up for sale/lease in a contract
-                [11] Update Vehicle - updates vehicle sale status from inventory
+                [11] Update Vehicle - updates vehicle sale status from contract
+                [12] Add Dealership - adds a new dealership to database
                 [X] Exit Application - quits running application
                 """;
 
@@ -139,6 +139,9 @@ public class UserInterface {
                     break;
                 case "11":
                     processUpdateVehicleInvRequest(d);
+                    break;
+                case "12":
+                    processAddDealershipRequest();
                     break;
                 case "X":
                     exitApp = true;
@@ -300,6 +303,40 @@ public class UserInterface {
         }
     }
 
+    public void processUpdateVehicleInvRequest(Dealership dealership) {
+        Vehicle v;
+        promptInstructions("Enter the VIN of the vehicle to update from:  " + dealership.getName());
+        String selectedVehicle = promptUser("VIN: ");
+        int parsedSelectedVehicle = Integer.parseInt(selectedVehicle);
+
+        v = vehicleManager.findVehicleByVin(parsedSelectedVehicle);
+
+        promptInstructions("Confirm whether vehicle was sold:  ");
+        boolean vehicleStatus = promptVehicleSold("""
+                [1] Yes
+                [2] No
+                """);
+
+        //Updating vehicle sold status for selected vehicle
+        vehicleManager.updateVehicleFromInventory(vehicleStatus, v);
+    }
+
+    public void processAddDealershipRequest() {
+        Dealership d;
+
+        promptInstructions("Enter new dealership to add into:  ");
+        String dealershipId = promptUser("ID: ");
+        int parsedDealershipId = Integer.parseInt(dealershipId);
+
+        String dealershipName = promptUser("Dealership Name: ");
+        String dealershipAddress = promptUser("Dealership Address: ");
+        String dealershipPhone = promptUser("Dealership Phone: ");
+
+        d = new Dealership(parsedDealershipId, dealershipName, dealershipAddress, dealershipPhone);
+
+        dealershipManager.saveDealership(d);
+    }
+
     //Retrieves dealerships from database
     public Dealership promptDealership() {
         //Querying for all dealerships
@@ -403,32 +440,19 @@ public class UserInterface {
         System.out.println(ColorCodes.SUCCESS + ColorCodes.ITALIC + "Contract has been saved." + ColorCodes.RESET);
     }
 
-    public void processUpdateVehicleInvRequest(Dealership dealership) {
-        Vehicle v;
-        promptInstructions("Enter the VIN of the vehicle to update from:  " + dealership.getName());
-        String selectedVehicle = promptUser("VIN: ");
-        int parsedSelectedVehicle = Integer.parseInt(selectedVehicle);
-
-        v = vehicleManager.findVehicleByVin(parsedSelectedVehicle);
-
-        promptInstructions("Confirm whether vehicle was sold:  ");
-        boolean vehicleStatus = promptVehicleSold("""
-                [1] Yes
-                [2] No
-                """);
-
-        //Updating vehicle sold status for selected vehicle
-        vehicleManager.updateVehicleFromInventory(vehicleStatus, v);
+    public static void printDealershipHeader() {
+        String dealershipHeader = ColorCodes.ORANGE_UNDERLINED + String.format("%-8s %-8s %-15s %-13s", "ID", "Name", "Address", "Phone") + ColorCodes.RESET;
+        System.out.println(dealershipHeader);
     }
 
-    public static void printDealershipHeader() {
-        String dealershipHeader = ColorCodes.LIGHT_BLUE_UNDERLINED + String.format("%-10s %-8s %-15s %-13s %-17s %-10s %-12s %-12s %-2s", "VIN", "Year", "Make", "Model", "Type", "Color", "Odometer", "Price", "Sold") + ColorCodes.RESET;
-        System.out.println(dealershipHeader);
+    public static void printVehicleHeader() {
+        String vehicleHeader = ColorCodes.LIGHT_BLUE_UNDERLINED + String.format("%-10s %-8s %-15s %-13s %-17s %-10s %-12s %-12s %-2s", "VIN", "Year", "Make", "Model", "Type", "Color", "Odometer", "Price", "Sold") + ColorCodes.RESET;
+        System.out.println(vehicleHeader);
     }
 
     private static void printVehicleList(List<Vehicle> vehicles) {
         if (!vehicles.isEmpty()) {
-            printDealershipHeader();
+            printVehicleHeader();
             for (Vehicle v : vehicles) {
                 System.out.println(v);
             }
