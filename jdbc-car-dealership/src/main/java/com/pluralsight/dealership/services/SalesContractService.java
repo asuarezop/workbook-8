@@ -47,7 +47,6 @@ public class SalesContractService implements SalesDAO {
             statement.setDouble(9, c.getMonthlyPayment());
             statement.setBoolean(10, c.isFinanced());
 
-            //Executing and verifying INSERT query
             int rows = statement.executeUpdate();
             System.out.printf("Rows updated: %d\n", rows);
 

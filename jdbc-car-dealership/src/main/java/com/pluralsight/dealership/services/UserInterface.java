@@ -417,6 +417,7 @@ public class UserInterface {
                 [2] No
                 """);
 
+        //Updating vehicle sold status for selected vehicle
         vehicleManager.updateVehicleFromInventory(vehicleStatus, v);
     }
 
