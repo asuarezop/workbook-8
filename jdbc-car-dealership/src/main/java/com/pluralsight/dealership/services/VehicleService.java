@@ -30,18 +30,7 @@ public class VehicleService implements VehicleDAO {
             ResultSet rs = statement.executeQuery();
 
             while (rs.next()) {
-                int vehicleVin = rs.getInt("vin");
-                int vehicleYear = rs.getInt("year");
-                String vehicleMake = rs.getString("make");
-                String vehicleModel = rs.getString("model");
-                String vehicleType = rs.getString("vehicleType");
-                String vehicleColor = rs.getString("color");
-                int vehicleMiles = rs.getInt("miles");
-                double vehiclePrice = rs.getDouble("price");
-                boolean isVehicleSold = rs.getBoolean("sold");
-
-                v = new Vehicle(vehicleVin, vehicleYear, vehicleMake, vehicleModel, vehicleType, vehicleColor, vehicleMiles, vehiclePrice, isVehicleSold);
-
+                v = createVehicleObj(rs);
                 vehicles.add(v);
             }
 
@@ -68,18 +57,7 @@ public class VehicleService implements VehicleDAO {
             ResultSet rs = statement.executeQuery();
 
             while (rs.next()) {
-                int vehicleVin = rs.getInt("vin");
-                int vehicleYear = rs.getInt("year");
-                String vehicleMake = rs.getString("make");
-                String vehicleModel = rs.getString("model");
-                String vehicleType = rs.getString("vehicleType");
-                String vehicleColor = rs.getString("color");
-                int vehicleMiles = rs.getInt("miles");
-                double vehiclePrice = rs.getDouble("price");
-                boolean isVehicleSold = rs.getBoolean("sold");
-
-                v = new Vehicle(vehicleVin, vehicleYear, vehicleMake, vehicleModel, vehicleType, vehicleColor, vehicleMiles, vehiclePrice, isVehicleSold);
-
+                v = createVehicleObj(rs);
                 vehicles.add(v);
             }
 
@@ -106,18 +84,7 @@ public class VehicleService implements VehicleDAO {
             ResultSet rs = statement.executeQuery();
 
             while (rs.next()) {
-                int vehicleVin = rs.getInt("vin");
-                int vehicleYear = rs.getInt("year");
-                String vehicleMake = rs.getString("make");
-                String vehicleModel = rs.getString("model");
-                String vehicleType = rs.getString("vehicleType");
-                String vehicleColor = rs.getString("color");
-                int vehicleMiles = rs.getInt("miles");
-                double vehiclePrice = rs.getDouble("price");
-                boolean isVehicleSold = rs.getBoolean("sold");
-
-                v = new Vehicle(vehicleVin, vehicleYear, vehicleMake, vehicleModel, vehicleType, vehicleColor, vehicleMiles, vehiclePrice, isVehicleSold);
-
+                v = createVehicleObj(rs);
                 vehicles.add(v);
             }
 
@@ -143,18 +110,7 @@ public class VehicleService implements VehicleDAO {
             ResultSet rs = statement.executeQuery();
 
             while (rs.next()) {
-                int vehicleVin = rs.getInt("vin");
-                int vehicleYear = rs.getInt("year");
-                String vehicleMake = rs.getString("make");
-                String vehicleModel = rs.getString("model");
-                String vehicleType = rs.getString("vehicleType");
-                String vehicleColor = rs.getString("color");
-                int vehicleMiles = rs.getInt("miles");
-                double vehiclePrice = rs.getDouble("price");
-                boolean isVehicleSold = rs.getBoolean("sold");
-
-                v = new Vehicle(vehicleVin, vehicleYear, vehicleMake, vehicleModel, vehicleType, vehicleColor, vehicleMiles, vehiclePrice, isVehicleSold);
-
+                v = createVehicleObj(rs);
                 vehicles.add(v);
             }
 
@@ -180,18 +136,7 @@ public class VehicleService implements VehicleDAO {
             ResultSet rs = statement.executeQuery();
 
             while (rs.next()) {
-                int vehicleVin = rs.getInt("vin");
-                int vehicleYear = rs.getInt("year");
-                String vehicleMake = rs.getString("make");
-                String vehicleModel = rs.getString("model");
-                String vehicleType = rs.getString("vehicleType");
-                String vehicleColor = rs.getString("color");
-                int vehicleMiles = rs.getInt("miles");
-                double vehiclePrice = rs.getDouble("price");
-                boolean isVehicleSold = rs.getBoolean("sold");
-
-                v = new Vehicle(vehicleVin, vehicleYear, vehicleMake, vehicleModel, vehicleType, vehicleColor, vehicleMiles, vehiclePrice, isVehicleSold);
-
+                v = createVehicleObj(rs);
                 vehicles.add(v);
             }
 
@@ -218,18 +163,7 @@ public class VehicleService implements VehicleDAO {
             ResultSet rs = statement.executeQuery();
 
             while (rs.next()) {
-                int vehicleVin = rs.getInt("vin");
-                int vehicleYear = rs.getInt("year");
-                String vehicleMake = rs.getString("make");
-                String vehicleModel = rs.getString("model");
-                String vehicleType = rs.getString("vehicleType");
-                String vehicleColor = rs.getString("color");
-                int vehicleMiles = rs.getInt("miles");
-                double vehiclePrice = rs.getDouble("price");
-                boolean isVehicleSold = rs.getBoolean("sold");
-
-                v = new Vehicle(vehicleVin, vehicleYear, vehicleMake, vehicleModel, vehicleType, vehicleColor, vehicleMiles, vehiclePrice, isVehicleSold);
-
+                v = createVehicleObj(rs);
                 vehicles.add(v);
             }
 
@@ -255,18 +189,7 @@ public class VehicleService implements VehicleDAO {
             ResultSet rs = statement.executeQuery();
 
             while (rs.next()) {
-                int vehicleVin = rs.getInt("vin");
-                int vehicleYear = rs.getInt("year");
-                String vehicleMake = rs.getString("make");
-                String vehicleModel = rs.getString("model");
-                String vehicleType = rs.getString("vehicleType");
-                String vehicleColor = rs.getString("color");
-                int vehicleMiles = rs.getInt("miles");
-                double vehiclePrice = rs.getDouble("price");
-                boolean isVehicleSold = rs.getBoolean("sold");
-
-                v = new Vehicle(vehicleVin, vehicleYear, vehicleMake, vehicleModel, vehicleType, vehicleColor, vehicleMiles, vehiclePrice, isVehicleSold);
-
+                v = createVehicleObj(rs);
                 vehicles.add(v);
             }
 
@@ -367,18 +290,7 @@ public class VehicleService implements VehicleDAO {
             ResultSet rs = statement.executeQuery();
 
             if (rs.next()) {
-                int vehicleVin = rs.getInt("vin");
-                int vehicleYear = rs.getInt("year");
-                String vehicleMake = rs.getString("make");
-                String vehicleModel = rs.getString("model");
-                String vehicleType = rs.getString("vehicleType");
-                String vehicleColor = rs.getString("color");
-                int vehicleMiles = rs.getInt("miles");
-                double vehiclePrice = rs.getDouble("price");
-                boolean isVehicleSold = rs.getBoolean("sold");
-
-                v = new Vehicle(vehicleVin, vehicleYear, vehicleMake, vehicleModel, vehicleType, vehicleColor, vehicleMiles, vehiclePrice, isVehicleSold);
-
+                v = createVehicleObj(rs);
                 return v;
             }
 
@@ -387,5 +299,19 @@ public class VehicleService implements VehicleDAO {
         }
 
         return null;
+    }
+
+    private Vehicle createVehicleObj(ResultSet rs) throws SQLException {
+        int vehicleVin = rs.getInt("vin");
+        int vehicleYear = rs.getInt("year");
+        String vehicleMake = rs.getString("make");
+        String vehicleModel = rs.getString("model");
+        String vehicleType = rs.getString("vehicleType");
+        String vehicleColor = rs.getString("color");
+        int vehicleMiles = rs.getInt("miles");
+        double vehiclePrice = rs.getDouble("price");
+        boolean isVehicleSold = rs.getBoolean("sold");
+
+        return new Vehicle(vehicleVin, vehicleYear, vehicleMake, vehicleModel, vehicleType, vehicleColor, vehicleMiles, vehiclePrice, isVehicleSold);
     }
 }

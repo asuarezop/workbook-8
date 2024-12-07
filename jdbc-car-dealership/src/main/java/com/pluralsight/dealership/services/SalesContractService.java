@@ -1,9 +1,7 @@
 package com.pluralsight.dealership.services;
 
 import com.pluralsight.dealership.controllers.SalesDAO;
-import com.pluralsight.dealership.models.Contract;
 import com.pluralsight.dealership.models.SalesContract;
-import com.pluralsight.dealership.models.Vehicle;
 
 import javax.sql.DataSource;
 import java.sql.Connection;

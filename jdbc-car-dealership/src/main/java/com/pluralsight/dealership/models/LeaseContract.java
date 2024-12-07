@@ -8,6 +8,11 @@ public class LeaseContract extends Contract {
     private double downPayment;
     private double monthlyPayment;
 
+    public LeaseContract(LocalDate date, String customerName, String customerEmail, int vehicleVin) {
+        super(date, customerName, customerEmail, vehicleVin);
+
+    }
+
     public LeaseContract(LocalDate date, String customerName, String customerEmail, Vehicle vehicleSold) {
         super(date, customerName, customerEmail, vehicleSold);
     }

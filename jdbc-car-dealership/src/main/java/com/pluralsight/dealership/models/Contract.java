@@ -8,12 +8,22 @@ public abstract class Contract {
     private String customerName;
     private String customerEmail;
     private Vehicle vehicleSold;
+    private int vehicleVin;
 
+    //For application representation
     protected Contract(LocalDate date, String customerName, String customerEmail, Vehicle vehicleSold) {
         this.date = date;
         this.customerName = customerName;
         this.customerEmail = customerEmail;
         this.vehicleSold = vehicleSold;
+    }
+
+    //For database representation
+    protected Contract(LocalDate date, String customerName, String customerEmail, int vehicleVin) {
+        this.date = date;
+        this.customerName = customerName;
+        this.customerEmail = customerEmail;
+        this.vehicleVin = vehicleVin;
     }
 
     public LocalDate getDate() {
@@ -30,6 +40,10 @@ public abstract class Contract {
 
     public Vehicle getVehicleSold() {
         return vehicleSold;
+    }
+
+    public int getVehicleVin() {
+        return vehicleVin;
     }
 
     //Subclasses have to provide their own implementation of each of these abstract methods

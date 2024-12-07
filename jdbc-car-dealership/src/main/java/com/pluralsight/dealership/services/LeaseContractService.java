@@ -4,10 +4,9 @@ import com.pluralsight.dealership.controllers.LeaseDAO;
 import com.pluralsight.dealership.models.LeaseContract;
 
 import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 public class LeaseContractService implements LeaseDAO {
@@ -19,7 +18,33 @@ public class LeaseContractService implements LeaseDAO {
 
     @Override
     public List<LeaseContract> findAllLeaseContracts() {
-        return List.of();
+        List<LeaseContract> leases = new ArrayList<>();
+
+        LeaseContract lc;
+
+        try (Connection conn = dataSource.getConnection()) {
+            PreparedStatement statement = conn.prepareStatement("""
+                    SELECT * FROM lease_contracts
+                    """);
+
+            ResultSet rs = statement.executeQuery();
+
+            while (rs.next()) {
+                LocalDate leaseDate = rs.getDate("lease_date").toLocalDate();
+                String customerName = rs.getString("customer_name");
+                String customerEmail = rs.getString("customer_email");
+                int vehicleVin = rs.getInt("vin");
+
+                lc = new LeaseContract(leaseDate, customerName, customerEmail, vehicleVin);
+
+                leases.add(lc);
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return leases;
     }
 
     @Override
