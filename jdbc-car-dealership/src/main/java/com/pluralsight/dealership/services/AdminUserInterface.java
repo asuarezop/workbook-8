@@ -1,7 +1,10 @@
 package com.pluralsight.dealership.services;
 
 import com.pluralsight.dealership.models.Dealership;
+import com.pluralsight.dealership.models.SalesContract;
 import com.pluralsight.dealership.models.Vehicle;
+
+import java.util.List;
 
 
 public class AdminUserInterface {
@@ -17,7 +20,8 @@ public class AdminUserInterface {
                 [1] Update Vehicle - updates vehicle sale status from contract
                 [2] Add Dealership - adds a new dealership
                 [3] Remove Dealership - removes a dealership
-                [4] All Contracts - display every sales/lease contract
+                [4] All Sales Contracts - display every sales contract
+                [5] All Lease Contracts - display every lease contract
                 [X] Exit Application - quits running application
                 """;
 
@@ -37,6 +41,8 @@ public class AdminUserInterface {
                 case "3":
                     processRemoveDealershipRequest();
                     break;
+                case "4":
+                    processGetAllSalesContracts();
                 case "X":
                     UserInterface.exitApp = true;
                     break;
@@ -90,5 +96,11 @@ public class AdminUserInterface {
         d = new Dealership(parsedDealershipId);
 
         UserInterface.dealershipManager.removeDealership(d);
+    }
+
+    public void processGetAllSalesContracts() {
+        List<SalesContract> sales = UserInterface.salesManager.findAllSalesContracts();
+
+        UserInterface.printContractList(sales);
     }
 }

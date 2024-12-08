@@ -2,12 +2,12 @@ package com.pluralsight.dealership.services;
 
 import com.pluralsight.dealership.controllers.SalesDAO;
 import com.pluralsight.dealership.models.SalesContract;
+import com.pluralsight.dealership.models.Vehicle;
 
 import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 public class SalesContractService implements SalesDAO {
@@ -19,7 +19,34 @@ public class SalesContractService implements SalesDAO {
 
     @Override
     public List<SalesContract> findAllSalesContracts() {
-        return List.of();
+        List<SalesContract> sales = new ArrayList<>();
+        SalesContract sc;
+        Vehicle v;
+
+        try (Connection conn = dataSource.getConnection()) {
+            PreparedStatement statement = conn.prepareStatement("""
+                    SELECT * FROM sales_contracts
+                    """);
+            ResultSet rs = statement.executeQuery();
+
+            while (rs.next()) {
+                LocalDate saleDate = rs.getDate("sale_date").toLocalDate();
+                String customerName = rs.getString("customer_name");
+                String customerEmail = rs.getString("customer_email");
+                int vehicleVin = rs.getInt("vin");
+
+                //Construct a full vehicle using another database method
+                v = UserInterface.vehicleManager.findVehicleByVin(vehicleVin);
+
+                sc = new SalesContract(saleDate, customerName, customerEmail, v);
+
+                sales.add(sc);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return sales;
     }
 
     @Override

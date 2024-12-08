@@ -10,7 +10,6 @@ public class LeaseContract extends Contract {
 
     public LeaseContract(LocalDate date, String customerName, String customerEmail, int vehicleVin) {
         super(date, customerName, customerEmail, vehicleVin);
-
     }
 
     public LeaseContract(LocalDate date, String customerName, String customerEmail, Vehicle vehicleSold) {

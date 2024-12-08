@@ -62,10 +62,10 @@ public class UserInterface {
             LeaseContractService lc = new LeaseContractService(dataSource);
 
             //Initializing service classes
-            this.dealershipManager = ds;
-            this.vehicleManager = vs;
-            this.salesManager = sc;
-            this.leaseManager = lc;
+            dealershipManager = ds;
+            vehicleManager = vs;
+            salesManager = sc;
+            leaseManager = lc;
 
         } catch (IOException e) {
             throw new RuntimeException();
@@ -427,6 +427,11 @@ public class UserInterface {
         System.out.println(vehicleHeader);
     }
 
+    public static void printContractHeader() {
+        String contractHeader = ColorCodes.CYAN_UNDERLINED + String.format("%-12s %-16s %-27s %-7s %10s %15s %16s %13s %10s %17s", "Date", "Customer Name", "Customer Email", "VIN", "Sales Tax", "Recording Fee", "Processing Fee", "Total Price", "Financed", "Monthly Payment") + ColorCodes.RESET;
+        System.out.println(contractHeader);
+    }
+
     private static void printVehicleList(List<Vehicle> vehicles) {
         if (!vehicles.isEmpty()) {
             printVehicleHeader();
@@ -435,6 +440,17 @@ public class UserInterface {
             }
         } else {
             System.out.println("No vehicles matched your input.");
+        }
+    }
+
+    protected static <T extends Contract> void printContractList(List<T> contracts) {
+        if (!contracts.isEmpty()) {
+            printContractHeader();
+            for (Contract c: contracts) {
+                System.out.println(c);
+            }
+        } else {
+            System.out.println("No contracts matched your input.");
         }
     }
 }
