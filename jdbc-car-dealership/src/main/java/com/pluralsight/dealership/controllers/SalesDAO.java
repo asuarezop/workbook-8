@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface SalesDAO {
     List<SalesContract> findAllSalesContracts();
-    SalesContract findSalesContractById(int id);
+    List<SalesContract> findSalesContractById(int id);
     void saveSalesContract(SalesContract c);
     void deleteSalesContract(SalesContract c);
 }

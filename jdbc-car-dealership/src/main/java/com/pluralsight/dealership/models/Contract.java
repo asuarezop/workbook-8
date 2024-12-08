@@ -5,11 +5,11 @@ import java.time.LocalDate;
 //Abstract Contract Class - cannot be used to instantiate a new object
 public abstract class Contract {
     private int id;
+    private int vehicleVin;
     private LocalDate date;
     private String customerName;
     private String customerEmail;
     private Vehicle vehicleSold;
-    private int vehicleVin;
 
     //For application representation
     protected Contract(LocalDate date, String customerName, String customerEmail, Vehicle vehicleSold) {

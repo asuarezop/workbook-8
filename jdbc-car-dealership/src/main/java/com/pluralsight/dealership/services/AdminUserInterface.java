@@ -25,6 +25,8 @@ public class AdminUserInterface {
                 [5] All Lease Contracts - display every lease contract
                 [6] Remove Sales Contract - removes a specific sale contract
                 [7] Remove Lease Contract - removes a specific lease contract
+                [8] Sales Contract By ID - filter for sale contracts by id
+                [9] Lease Contract By ID - filter for lease contracts by id
                 [X] Exit Application - quits running application
                 """;
         boolean exitAdmin = false;
@@ -55,7 +57,10 @@ public class AdminUserInterface {
                     processDeleteSalesContract();
                     break;
                 case "7":
-                    processLeaseSalesContract();
+                    processDeleteLeaseSalesContract();
+                    break;
+                case "8":
+                    processGetSalesContractById();
                     break;
                 case "X":
                     exitAdmin = true;
@@ -138,7 +143,7 @@ public class AdminUserInterface {
         UserInterface.salesManager.deleteSalesContract(sc);
     }
 
-    public void processLeaseSalesContract() {
+    public void processDeleteLeaseSalesContract() {
         LeaseContract lc;
         UserInterface.promptInstructions("Enter the lease contract you wish to remove:  ");
         String leaseId =  UserInterface.promptUser("Lease Contract ID: ");
@@ -150,5 +155,14 @@ public class AdminUserInterface {
         lc = new LeaseContract(parsedLeaseId, vehicleVin);
 
         UserInterface.leaseManager.deleteLeaseContract(lc);
+    }
+
+    public void processGetSalesContractById() {
+        UserInterface.promptInstructions("Enter the sales contract ID to find matching sales contract:  ");
+        String salesId = UserInterface.promptUser("Sales Contract ID: ");
+        int parsedSalesId = Integer.parseInt(salesId);
+
+       List<SalesContract> sale = UserInterface.salesManager.findSalesContractById(parsedSalesId);
+       UserInterface.printContractList(sale);
     }
 }

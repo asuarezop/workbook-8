@@ -52,8 +52,35 @@ public class SalesContractService implements SalesDAO {
     }
 
     @Override
-    public SalesContract findSalesContractById(int id) {
-        return null;
+    public List<SalesContract> findSalesContractById(int id) {
+        List<SalesContract> sale = new ArrayList<>();
+        SalesContract sc;
+        Vehicle v;
+
+        try (Connection conn = dataSource.getConnection()) {
+            PreparedStatement statement = conn.prepareStatement("""
+                    SELECT * FROM sales_contracts
+                    WHERE id = ?
+                    """);
+            statement.setInt(1, id);
+            ResultSet rs = statement.executeQuery();
+
+            if (rs.next()) {
+                LocalDate saleDate = rs.getDate("sale_date").toLocalDate();
+                String customerName = rs.getString("customer_name");
+                String customerEmail = rs.getString("customer_email");
+                int vehicleVin = rs.getInt("vin");
+
+                v = UserInterface.vehicleManager.findVehicleByVin(vehicleVin);
+
+                sc = new SalesContract(saleDate, customerName, customerEmail, v);
+                sale.add(sc);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return sale;
     }
 
     @Override
