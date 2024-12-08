@@ -272,7 +272,6 @@ public class UserInterface {
         String vehicleVin = promptUser("VIN: ");
         int parsedVehicleVin = Integer.parseInt(vehicleVin);
 
-        //Creating a vehicle with only VIN for comparison with removeVehicle()
         v = new Vehicle(parsedVehicleVin);
 
         vehicleManager.removeVehicleFromInventory(v);

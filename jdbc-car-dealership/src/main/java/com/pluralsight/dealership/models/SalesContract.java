@@ -10,8 +10,8 @@ public class SalesContract extends Contract {
     private double downPayment;
     private double monthlyPayment;
 
-    public SalesContract(LocalDate date, String customerName, String customerEmail, int vehicleVin) {
-        super(date, customerName, customerEmail, vehicleVin);
+    public SalesContract(int id, int vehicleVin) {
+        super(id, vehicleVin);
     }
 
     public SalesContract(LocalDate date, String customerName, String customerEmail, Vehicle vehicleSold) {

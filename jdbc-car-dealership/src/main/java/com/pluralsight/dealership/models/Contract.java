@@ -4,6 +4,7 @@ import java.time.LocalDate;
 
 //Abstract Contract Class - cannot be used to instantiate a new object
 public abstract class Contract {
+    private int id;
     private LocalDate date;
     private String customerName;
     private String customerEmail;
@@ -19,11 +20,13 @@ public abstract class Contract {
     }
 
     //For database representation
-    protected Contract(LocalDate date, String customerName, String customerEmail, int vehicleVin) {
-        this.date = date;
-        this.customerName = customerName;
-        this.customerEmail = customerEmail;
+    protected Contract(int id, int vehicleVin) {
+        this.id = id;
         this.vehicleVin = vehicleVin;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public LocalDate getDate() {

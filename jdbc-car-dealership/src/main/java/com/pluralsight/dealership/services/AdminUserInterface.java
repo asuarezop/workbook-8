@@ -49,6 +49,9 @@ public class AdminUserInterface {
                 case "5":
                     processGetAllLeaseContracts();
                     break;
+                case "6":
+                    processDeleteSalesContract();
+                    break;
                 case "X":
                     exitAdmin = true;
                     break;
@@ -114,5 +117,19 @@ public class AdminUserInterface {
         List<LeaseContract> leases = UserInterface.leaseManager.findAllLeaseContracts();
 
         UserInterface.printContractList(leases);
+    }
+
+    public void processDeleteSalesContract() {
+        SalesContract sc;
+        UserInterface.promptInstructions("Enter the sales contract you wish to remove:  ");
+        String salesId =  UserInterface.promptUser("Sales Contract ID: ");
+        int parsedSalesId = Integer.parseInt(salesId);
+
+        //Find the vehicle vin associated with the given sales contract ID
+        int vehicleVin = UserInterface.vehicleManager.findVehicleVinByContractId(parsedSalesId);
+
+        sc = new SalesContract(parsedSalesId, vehicleVin);
+
+        UserInterface.salesManager.deleteSalesContract(sc);
     }
 }

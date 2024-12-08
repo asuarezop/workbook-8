@@ -294,6 +294,28 @@ public class VehicleService implements VehicleDAO {
         return null;
     }
 
+    @Override
+    public int findVehicleVinByContractId(int id) {
+        int vehicleVin;
+        try (Connection conn = dataSource.getConnection()) {
+            PreparedStatement statement = conn.prepareStatement("""
+                    SELECT vehicles.vin FROM vehicles
+                    JOIN sales_contracts ON vehicle.vin = sales_contracts.vin
+                    WHERE id = ?
+                    """);
+            ResultSet rs = statement.executeQuery();
+
+            if (rs.next()) {
+                vehicleVin = rs.getInt("vin");
+                return vehicleVin;
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return 0;
+    }
+
     private Vehicle createVehicleObj(ResultSet rs) throws SQLException {
         int vehicleVin = rs.getInt("vin");
         int vehicleYear = rs.getInt("year");

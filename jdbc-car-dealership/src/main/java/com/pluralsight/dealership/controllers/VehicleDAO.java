@@ -16,4 +16,5 @@ public interface VehicleDAO {
     void removeVehicleFromInventory(Vehicle v);
     void updateVehicleFromInventory(boolean status, Vehicle v);
     Vehicle findVehicleByVin(int vin);
+    int findVehicleVinByContractId(int id);
 }
