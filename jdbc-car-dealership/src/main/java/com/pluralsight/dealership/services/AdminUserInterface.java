@@ -32,10 +32,10 @@ public class AdminUserInterface {
                     processUpdateVehicleInvRequest(dealership);
                     break;
                 case "2":
-//                    processAddDealershipRequest(dealership);
+                    processAddDealershipRequest();
                     break;
                 case "3":
-//                    processRemoveDealershipRequest(dealership);
+                    processRemoveDealershipRequest();
                     break;
                 case "X":
                     UserInterface.exitApp = true;
@@ -62,5 +62,33 @@ public class AdminUserInterface {
 
         //Updating vehicle sold status for selected vehicle
         UserInterface.vehicleManager.updateVehicleFromInventory(vehicleStatus, v);
+    }
+
+    public void processAddDealershipRequest() {
+        Dealership d;
+
+        UserInterface.promptInstructions("Enter new dealership to add into:  ");
+        String dealershipId = UserInterface.promptUser("ID: ");
+        int parsedDealershipId = Integer.parseInt(dealershipId);
+
+        String dealershipName = UserInterface.promptUser("Dealership Name: ");
+        String dealershipAddress = UserInterface.promptUser("Dealership Address: ");
+        String dealershipPhone = UserInterface.promptUser("Dealership Phone: ");
+
+        d = new Dealership(parsedDealershipId, dealershipName, dealershipAddress, dealershipPhone);
+
+        UserInterface.dealershipManager.saveDealership(d);
+    }
+
+    public void processRemoveDealershipRequest() {
+        Dealership d;
+
+        UserInterface.promptInstructions("Enter the dealership you wish to remove:  ");
+        String dealershipId = UserInterface.promptUser("Dealership ID: ");
+        int parsedDealershipId = Integer.parseInt(dealershipId);
+
+        d = new Dealership(parsedDealershipId);
+
+        UserInterface.dealershipManager.removeDealership(d);
     }
 }

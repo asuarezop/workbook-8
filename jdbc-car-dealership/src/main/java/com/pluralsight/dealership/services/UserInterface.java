@@ -18,10 +18,10 @@ public class UserInterface {
     private final String configFilePath = "src/main/resources/config.properties";
 
     //Data manager service objects
-    private DealershipService dealershipManager;
+    protected static DealershipService dealershipManager;
     protected static VehicleService vehicleManager;
-    private SalesContractService salesManager;
-    private LeaseContractService leaseManager;
+    protected static SalesContractService salesManager;
+    protected static LeaseContractService leaseManager;
 
     //Holds a Properties object for grabbing database credentials
     private Properties properties;
@@ -135,12 +135,6 @@ public class UserInterface {
                     break;
                 case "10":
                     processSellLeaseVehicleRequest(d);
-                    break;
-                case "12":
-                    processAddDealershipRequest();
-                    break;
-                case "13":
-                    processRemoveDealershipRequest();
                     break;
                 case "A":
                     runAsAdmin(d);
@@ -303,34 +297,6 @@ public class UserInterface {
         } else if (parsedContractOption == 2) {
             promptContractDetails("lease", v);
         }
-    }
-
-    public void processAddDealershipRequest() {
-        Dealership d;
-
-        promptInstructions("Enter new dealership to add into:  ");
-        String dealershipId = promptUser("ID: ");
-        int parsedDealershipId = Integer.parseInt(dealershipId);
-
-        String dealershipName = promptUser("Dealership Name: ");
-        String dealershipAddress = promptUser("Dealership Address: ");
-        String dealershipPhone = promptUser("Dealership Phone: ");
-
-        d = new Dealership(parsedDealershipId, dealershipName, dealershipAddress, dealershipPhone);
-
-        dealershipManager.saveDealership(d);
-    }
-
-    public void processRemoveDealershipRequest() {
-        Dealership d;
-
-        promptInstructions("Enter the dealership you wish to remove:  ");
-        String dealershipId = promptUser("Dealership ID: ");
-        int parsedDealershipId = Integer.parseInt(dealershipId);
-
-        d = new Dealership(parsedDealershipId);
-
-        dealershipManager.removeDealership(d);
     }
 
     private void runAsAdmin(Dealership dealership) {
