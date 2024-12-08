@@ -1,5 +1,6 @@
 package com.pluralsight.dealership.services;
 
+import JavaHelpers.ColorCodes;
 import com.pluralsight.dealership.controllers.LeaseDAO;
 import com.pluralsight.dealership.models.LeaseContract;
 import com.pluralsight.dealership.models.Vehicle;
@@ -81,6 +82,21 @@ public class LeaseContractService implements LeaseDAO {
 
     @Override
     public void deleteLeaseContract(LeaseContract c) {
+        try (Connection conn = dataSource.getConnection()) {
+            PreparedStatement statement = conn.prepareStatement("""
+                    DELETE FROM lease_contracts WHERE id = ?
+                    """);
+            statement.setInt(1, c.getId());
 
+            //Executing and verifying DELETE query
+            int rows = statement.executeUpdate();
+            System.out.printf("Rows updated: %d\n", rows);
+
+            //Confirmation message
+            System.out.println(ColorCodes.SUCCESS + ColorCodes.ITALIC + "Lease contract removed from database." + ColorCodes.RESET);
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

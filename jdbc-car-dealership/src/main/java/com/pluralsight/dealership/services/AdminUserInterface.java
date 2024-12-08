@@ -23,6 +23,8 @@ public class AdminUserInterface {
                 [3] Remove Dealership - removes a dealership
                 [4] All Sales Contracts - display every sales contract
                 [5] All Lease Contracts - display every lease contract
+                [6] Remove Sales Contract - removes a specific sale contract
+                [7] Remove Lease Contract - removes a specific lease contract
                 [X] Exit Application - quits running application
                 """;
         boolean exitAdmin = false;
@@ -51,6 +53,9 @@ public class AdminUserInterface {
                     break;
                 case "6":
                     processDeleteSalesContract();
+                    break;
+                case "7":
+                    processLeaseSalesContract();
                     break;
                 case "X":
                     exitAdmin = true;
@@ -131,5 +136,19 @@ public class AdminUserInterface {
         sc = new SalesContract(parsedSalesId, vehicleVin);
 
         UserInterface.salesManager.deleteSalesContract(sc);
+    }
+
+    public void processLeaseSalesContract() {
+        LeaseContract lc;
+        UserInterface.promptInstructions("Enter the lease contract you wish to remove:  ");
+        String leaseId =  UserInterface.promptUser("Lease Contract ID: ");
+        int parsedLeaseId = Integer.parseInt(leaseId);
+
+        //Find the vehicle vin associated with the given lease contract ID
+        int vehicleVin = UserInterface.vehicleManager.findVehicleVinByContractId(parsedLeaseId);
+
+        lc = new LeaseContract(parsedLeaseId, vehicleVin);
+
+        UserInterface.leaseManager.deleteLeaseContract(lc);
     }
 }
