@@ -19,7 +19,7 @@ public class UserInterface {
 
     //Data manager service objects
     private DealershipService dealershipManager;
-    private VehicleService vehicleManager;
+    protected static VehicleService vehicleManager;
     private SalesContractService salesManager;
     private LeaseContractService leaseManager;
 
@@ -27,16 +27,16 @@ public class UserInterface {
     private Properties properties;
 
     //Related to input from user
-    static String userInput;
+    protected static String userInput;
 
     //Initializing scanner to read from terminal input
-    static Scanner inputSc = new Scanner(System.in);
+    protected static Scanner inputSc = new Scanner(System.in);
 
     //Dealership selected by user based on id
-    static int dealershipChoice;
+    protected static int dealershipChoice;
 
     //Boolean condition to exit application screens
-    static boolean exitApp = false;
+    protected static boolean exitApp = false;
 
     //init(): This method gets called first before any other methods are run inside main()
     private void init() {
@@ -91,9 +91,7 @@ public class UserInterface {
                 [8] Add Vehicle - adds a new vehicle to inventory
                 [9] Remove Vehicle - removes a vehicle from inventory
                 [10] Sell/Lease Vehicle - select vehicle to put up for sale/lease in a contract
-                [11] Update Vehicle - updates vehicle sale status from contract
-                [12] Add Dealership - adds a new dealership to database
-                [13] Remove Dealership - removes a dealership from database
+                [A] Run Admin Panel - enter the application as admin to view additional queries
                 [X] Exit Application - quits running application
                 """;
 
@@ -138,14 +136,14 @@ public class UserInterface {
                 case "10":
                     processSellLeaseVehicleRequest(d);
                     break;
-                case "11":
-                    processUpdateVehicleInvRequest(d);
-                    break;
                 case "12":
                     processAddDealershipRequest();
                     break;
                 case "13":
                     processRemoveDealershipRequest();
+                    break;
+                case "A":
+                    runAsAdmin(d);
                     break;
                 case "X":
                     exitApp = true;
@@ -307,24 +305,6 @@ public class UserInterface {
         }
     }
 
-    public void processUpdateVehicleInvRequest(Dealership dealership) {
-        Vehicle v;
-        promptInstructions("Enter the VIN of the vehicle to update from:  " + dealership.getName());
-        String selectedVehicle = promptUser("VIN: ");
-        int parsedSelectedVehicle = Integer.parseInt(selectedVehicle);
-
-        v = vehicleManager.findVehicleByVin(parsedSelectedVehicle);
-
-        promptInstructions("Confirm whether vehicle was sold:  ");
-        boolean vehicleStatus = promptVehicleSold("""
-                [1] Yes
-                [2] No
-                """);
-
-        //Updating vehicle sold status for selected vehicle
-        vehicleManager.updateVehicleFromInventory(vehicleStatus, v);
-    }
-
     public void processAddDealershipRequest() {
         Dealership d;
 
@@ -353,6 +333,21 @@ public class UserInterface {
         dealershipManager.removeDealership(d);
     }
 
+    private void runAsAdmin(Dealership dealership) {
+        promptInstructions("Enter password to enter admin portal:  ");
+        String appPassword = promptUser("Password: ");
+
+        if (appPassword.equals("admin")) {
+            AdminUserInterface adminUI = new AdminUserInterface();
+
+            //Display admin UI options
+            adminUI.showAdminScreen(dealership);
+        }
+
+        //If user typed wrong password, go back to regular screen
+        showHomeScreen();
+    }
+
     //Retrieves dealerships from database
     public Dealership promptDealership() {
         //Querying for all dealerships
@@ -371,17 +366,17 @@ public class UserInterface {
     }
 
     //Retrieves user input from a prompt
-    public String promptUser(String prompt) {
+    public static String promptUser(String prompt) {
         System.out.print(ColorCodes.WHITE + prompt + ColorCodes.RESET);
         return userInput = inputSc.nextLine().trim();
     }
 
-    public void promptInstructions(String prompt) {
+    public static void promptInstructions(String prompt) {
         String[] textDetails = prompt.split(": ");
         System.out.println(ColorCodes.LIGHT_BLUE + textDetails[0] + ColorCodes.ORANGE_BOLD + ColorCodes.ITALIC + textDetails[1] + ColorCodes.RESET);
     }
 
-    public boolean promptVehicleSold(String prompt) {
+    public static boolean promptVehicleSold(String prompt) {
         String hasVehicleBeenSold = promptUser(prompt);
         return hasVehicleBeenSold.equalsIgnoreCase("Yes") | hasVehicleBeenSold.equals("1");
     }
@@ -462,7 +457,7 @@ public class UserInterface {
     }
 
     public static void printVehicleHeader() {
-        String vehicleHeader = ColorCodes.LIGHT_BLUE_UNDERLINED + String.format("%-10s %-8s %-15s %-13s %-17s %-10s %-12s %-12s %-2s", "VIN", "Year", "Make", "Model", "Type", "Color", "Odometer", "Price", "Sold") + ColorCodes.RESET;
+        String vehicleHeader = ColorCodes.LIGHT_BLUE_UNDERLINED + String.format("%-10s %-8s %-12s %-18s %-12s %-10s %-12s %-12s %-2s", "VIN", "Year", "Make", "Model", "Type", "Color", "Odometer", "Price", "Sold") + ColorCodes.RESET;
         System.out.println(vehicleHeader);
     }
 

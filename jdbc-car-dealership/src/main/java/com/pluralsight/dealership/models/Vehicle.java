@@ -67,6 +67,6 @@ public class Vehicle {
 
     @Override
     public String toString() {
-        return String.format("%-10s %-8s %-15s %-13s %-17s %-10s %-12d %5.2f %8s", vin, year, make, model, vehicleType, color, miles, price, (sold) ? "YES" : "NO");
+        return String.format("%-10s %-8s %-12s %-18s %-12s %-10s %-12d %5.2f %8s", vin, year, make, model, vehicleType, color, miles, price, (sold) ? "YES" : "NO");
     }
 }

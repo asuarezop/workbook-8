@@ -5,7 +5,7 @@ import com.pluralsight.dealership.services.UserInterface;
 import java.io.IOException;
 
 public class DealershipApp {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
         //Declaring reference variable + instantiating a new UserInterface object
         UserInterface ui = new UserInterface();
 
