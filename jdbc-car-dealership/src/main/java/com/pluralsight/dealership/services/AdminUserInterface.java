@@ -62,6 +62,9 @@ public class AdminUserInterface {
                 case "8":
                     processGetSalesContractById();
                     break;
+                case "9":
+                    processGetLeaseContractById();
+                    break;
                 case "X":
                     exitAdmin = true;
                     break;
@@ -164,5 +167,14 @@ public class AdminUserInterface {
 
        List<SalesContract> sale = UserInterface.salesManager.findSalesContractById(parsedSalesId);
        UserInterface.printContractList(sale);
+    }
+
+    public void processGetLeaseContractById() {
+        UserInterface.promptInstructions("Enter the lease contract ID to find matching lease contract:  ");
+        String leaseId = UserInterface.promptUser("Lease Contract ID: ");
+        int parsedLeaseId = Integer.parseInt(leaseId);
+
+        List<LeaseContract> lease = UserInterface.leaseManager.findLeaseContractById(parsedLeaseId);
+        UserInterface.printContractList(lease);
     }
 }

@@ -52,8 +52,35 @@ public class LeaseContractService implements LeaseDAO {
     }
 
     @Override
-    public LeaseContract findLeaseContractById(int id) {
-        return null;
+    public List<LeaseContract> findLeaseContractById(int id) {
+        List<LeaseContract> lease = new ArrayList<>();
+        LeaseContract lc;
+        Vehicle v;
+
+        try (Connection conn = dataSource.getConnection()) {
+            PreparedStatement statement = conn.prepareStatement("""
+                    SELECT * FROM lease_contracts
+                    WHERE id = ?
+                    """);
+            statement.setInt(1, id);
+            ResultSet rs = statement.executeQuery();
+
+            if (rs.next()) {
+                LocalDate leaseDate = rs.getDate("lease_date").toLocalDate();
+                String customerName = rs.getString("customer_name");
+                String customerEmail = rs.getString("customer_email");
+                int vehicleVin = rs.getInt("vin");
+
+                v = UserInterface.vehicleManager.findVehicleByVin(vehicleVin);
+
+                lc = new LeaseContract(leaseDate, customerName, customerEmail, v);
+                lease.add(lc);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return lease;
     }
 
     @Override
