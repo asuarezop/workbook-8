@@ -427,9 +427,21 @@ public class UserInterface {
         System.out.println(vehicleHeader);
     }
 
-    public static void printContractHeader() {
-        String contractHeader = ColorCodes.CYAN_UNDERLINED + String.format("%-12s %-16s %-27s %-7s %10s %15s %16s %13s %10s %17s", "Date", "Customer Name", "Customer Email", "VIN", "Sales Tax", "Recording Fee", "Processing Fee", "Total Price", "Financed", "Monthly Payment") + ColorCodes.RESET;
-        System.out.println(contractHeader);
+    public static <T extends Contract> void printContractHeader(List<T> contracts) {
+        String contractHeader;
+
+        //Retrieving the type of subclass for contracts list
+        Contract contractType = contracts.get(0);
+
+        if (contractType instanceof SalesContract) {
+            contractHeader = ColorCodes.CYAN_UNDERLINED + String.format("%-12s %-16s %-27s %-7s %10s %15s %16s %13s %10s %17s", "Date", "Customer Name", "Customer Email", "VIN", "Sales Tax", "Recording Fee", "Processing Fee", "Total Price", "Financed", "Monthly Payment") + ColorCodes.RESET;
+            System.out.println(contractHeader);
+        } else if (contractType instanceof LeaseContract) {
+            contractHeader = ColorCodes.CYAN_UNDERLINED + String.format("%-12s %-18s %-27s %-8s %10s %15s %16s %20s", "Date", "Customer Name", "Customer Email", "VIN", "Expected End Value", "Lease Fee", "Total Price", "Monthly Payment") + ColorCodes.RESET;
+            System.out.println(contractHeader);
+        } else {
+            System.out.println("Unknown Contract");
+        }
     }
 
     private static void printVehicleList(List<Vehicle> vehicles) {
@@ -445,7 +457,7 @@ public class UserInterface {
 
     protected static <T extends Contract> void printContractList(List<T> contracts) {
         if (!contracts.isEmpty()) {
-            printContractHeader();
+            printContractHeader(contracts);
             for (Contract c: contracts) {
                 System.out.println(c);
             }

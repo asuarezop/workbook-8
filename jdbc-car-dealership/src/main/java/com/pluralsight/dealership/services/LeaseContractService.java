@@ -2,6 +2,7 @@ package com.pluralsight.dealership.services;
 
 import com.pluralsight.dealership.controllers.LeaseDAO;
 import com.pluralsight.dealership.models.LeaseContract;
+import com.pluralsight.dealership.models.Vehicle;
 
 import javax.sql.DataSource;
 import java.sql.*;
@@ -19,8 +20,8 @@ public class LeaseContractService implements LeaseDAO {
     @Override
     public List<LeaseContract> findAllLeaseContracts() {
         List<LeaseContract> leases = new ArrayList<>();
-
         LeaseContract lc;
+        Vehicle v;
 
         try (Connection conn = dataSource.getConnection()) {
             PreparedStatement statement = conn.prepareStatement("""
@@ -35,7 +36,9 @@ public class LeaseContractService implements LeaseDAO {
                 String customerEmail = rs.getString("customer_email");
                 int vehicleVin = rs.getInt("vin");
 
-                lc = new LeaseContract(leaseDate, customerName, customerEmail, vehicleVin);
+                v = UserInterface.vehicleManager.findVehicleByVin(vehicleVin);
+
+                lc = new LeaseContract(leaseDate, customerName, customerEmail, v);
 
                 leases.add(lc);
             }

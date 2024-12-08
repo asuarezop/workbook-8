@@ -38,6 +38,7 @@ public class SalesContractService implements SalesDAO {
                 //Construct a full vehicle using another database method
                 v = UserInterface.vehicleManager.findVehicleByVin(vehicleVin);
 
+                //Constructing a new sales contract with associated vehicle found
                 sc = new SalesContract(saleDate, customerName, customerEmail, v);
 
                 sales.add(sc);

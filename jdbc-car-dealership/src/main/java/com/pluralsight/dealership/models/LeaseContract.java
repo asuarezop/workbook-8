@@ -58,6 +58,6 @@ public class LeaseContract extends Contract {
 
     @Override
     public String toString() {
-        return String.format("%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%.2f|%.2f|%.2f|%.2f|%.2f\n", "LEASE", getDate(), getCustomerName(), getCustomerEmail(), getVehicleSold().getVin(), getVehicleSold().getYear(), getVehicleSold().getMake(), getVehicleSold().getModel(), getVehicleSold().getVehicleType(), getVehicleSold().getColor(), getVehicleSold().getMiles(), getVehicleSold().getPrice(), getExpectedEndValue(), getLeaseFee(), getTotalPrice(), getMonthlyPayment());
+        return String.format("%-12s %-18s %-27s %-10s %11.2f %20.2f %16.2f %20.2f", getDate(), getCustomerName(), getCustomerEmail(), getVehicleSold().getVin(), getExpectedEndValue(), getLeaseFee(), getTotalPrice(), getMonthlyPayment());
     }
 }

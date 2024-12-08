@@ -1,6 +1,7 @@
 package com.pluralsight.dealership.services;
 
 import com.pluralsight.dealership.models.Dealership;
+import com.pluralsight.dealership.models.LeaseContract;
 import com.pluralsight.dealership.models.SalesContract;
 import com.pluralsight.dealership.models.Vehicle;
 
@@ -24,6 +25,7 @@ public class AdminUserInterface {
                 [5] All Lease Contracts - display every lease contract
                 [X] Exit Application - quits running application
                 """;
+        boolean exitAdmin = false;
 
         do {
             System.out.println(adminScreenMenuHeader);
@@ -43,13 +45,17 @@ public class AdminUserInterface {
                     break;
                 case "4":
                     processGetAllSalesContracts();
+                    break;
+                case "5":
+                    processGetAllLeaseContracts();
+                    break;
                 case "X":
-                    UserInterface.exitApp = true;
+                    exitAdmin = true;
                     break;
                 default:
                     System.out.println("Sorry, that's not a valid option. Please make your selection.");
             }
-        } while (!UserInterface.exitApp);
+        } while (!exitAdmin);
     }
 
     public void processUpdateVehicleInvRequest(Dealership dealership) {
@@ -102,5 +108,11 @@ public class AdminUserInterface {
         List<SalesContract> sales = UserInterface.salesManager.findAllSalesContracts();
 
         UserInterface.printContractList(sales);
+    }
+
+    public void processGetAllLeaseContracts() {
+        List<LeaseContract> leases = UserInterface.leaseManager.findAllLeaseContracts();
+
+        UserInterface.printContractList(leases);
     }
 }
