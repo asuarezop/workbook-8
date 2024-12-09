@@ -7,7 +7,6 @@ public class Dealership {
     private String name;
     private String address;
     private String phone;
-    private final ArrayList<Vehicle> inventory = new ArrayList<>();
 
     //Constructor for a dealership with only an id
     public Dealership(int id) {
@@ -37,10 +36,6 @@ public class Dealership {
 
     public String getPhone() {
         return phone;
-    }
-
-    public ArrayList<Vehicle> getInventory() {
-        return inventory;
     }
 
     @Override

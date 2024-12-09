@@ -22,7 +22,6 @@ public class LeaseContractService implements LeaseDAO {
     public List<LeaseContract> findAllLeaseContracts() {
         List<LeaseContract> leases = new ArrayList<>();
         LeaseContract lc;
-        Vehicle v;
 
         try (Connection conn = dataSource.getConnection()) {
             PreparedStatement statement = conn.prepareStatement("""
@@ -32,15 +31,7 @@ public class LeaseContractService implements LeaseDAO {
             ResultSet rs = statement.executeQuery();
 
             while (rs.next()) {
-                LocalDate leaseDate = rs.getDate("lease_date").toLocalDate();
-                String customerName = rs.getString("customer_name");
-                String customerEmail = rs.getString("customer_email");
-                int vehicleVin = rs.getInt("vin");
-
-                v = UserInterface.vehicleManager.findVehicleByVin(vehicleVin);
-
-                lc = new LeaseContract(leaseDate, customerName, customerEmail, v);
-
+                lc = createLeaseContractObj(rs);;
                 leases.add(lc);
             }
 
@@ -55,7 +46,6 @@ public class LeaseContractService implements LeaseDAO {
     public List<LeaseContract> findLeaseContractById(int id) {
         List<LeaseContract> lease = new ArrayList<>();
         LeaseContract lc;
-        Vehicle v;
 
         try (Connection conn = dataSource.getConnection()) {
             PreparedStatement statement = conn.prepareStatement("""
@@ -66,14 +56,7 @@ public class LeaseContractService implements LeaseDAO {
             ResultSet rs = statement.executeQuery();
 
             if (rs.next()) {
-                LocalDate leaseDate = rs.getDate("lease_date").toLocalDate();
-                String customerName = rs.getString("customer_name");
-                String customerEmail = rs.getString("customer_email");
-                int vehicleVin = rs.getInt("vin");
-
-                v = UserInterface.vehicleManager.findVehicleByVin(vehicleVin);
-
-                lc = new LeaseContract(leaseDate, customerName, customerEmail, v);
+                lc = createLeaseContractObj(rs);
                 lease.add(lc);
             }
         } catch (SQLException e) {
@@ -125,5 +108,17 @@ public class LeaseContractService implements LeaseDAO {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private LeaseContract createLeaseContractObj(ResultSet rs) throws SQLException {
+        Vehicle v;
+        LocalDate leaseDate = rs.getDate("lease_date").toLocalDate();
+        String customerName = rs.getString("customer_name");
+        String customerEmail = rs.getString("customer_email");
+        int vehicleVin = rs.getInt("vin");
+
+        v = UserInterface.vehicleManager.findVehicleByVin(vehicleVin);
+
+        return new LeaseContract(leaseDate, customerName, customerEmail, v);
     }
 }

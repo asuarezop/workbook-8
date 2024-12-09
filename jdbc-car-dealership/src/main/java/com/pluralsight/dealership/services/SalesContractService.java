@@ -2,6 +2,7 @@ package com.pluralsight.dealership.services;
 
 import JavaHelpers.ColorCodes;
 import com.pluralsight.dealership.controllers.SalesDAO;
+import com.pluralsight.dealership.models.LeaseContract;
 import com.pluralsight.dealership.models.SalesContract;
 import com.pluralsight.dealership.models.Vehicle;
 
@@ -22,7 +23,6 @@ public class SalesContractService implements SalesDAO {
     public List<SalesContract> findAllSalesContracts() {
         List<SalesContract> sales = new ArrayList<>();
         SalesContract sc;
-        Vehicle v;
 
         try (Connection conn = dataSource.getConnection()) {
             PreparedStatement statement = conn.prepareStatement("""
@@ -31,17 +31,7 @@ public class SalesContractService implements SalesDAO {
             ResultSet rs = statement.executeQuery();
 
             while (rs.next()) {
-                LocalDate saleDate = rs.getDate("sale_date").toLocalDate();
-                String customerName = rs.getString("customer_name");
-                String customerEmail = rs.getString("customer_email");
-                int vehicleVin = rs.getInt("vin");
-
-                //Construct a full vehicle using another database method
-                v = UserInterface.vehicleManager.findVehicleByVin(vehicleVin);
-
-                //Constructing a new sales contract with associated vehicle found
-                sc = new SalesContract(saleDate, customerName, customerEmail, v);
-
+                sc = createSalesContractObj(rs);
                 sales.add(sc);
             }
         } catch (SQLException e) {
@@ -55,7 +45,6 @@ public class SalesContractService implements SalesDAO {
     public List<SalesContract> findSalesContractById(int id) {
         List<SalesContract> sale = new ArrayList<>();
         SalesContract sc;
-        Vehicle v;
 
         try (Connection conn = dataSource.getConnection()) {
             PreparedStatement statement = conn.prepareStatement("""
@@ -66,14 +55,7 @@ public class SalesContractService implements SalesDAO {
             ResultSet rs = statement.executeQuery();
 
             if (rs.next()) {
-                LocalDate saleDate = rs.getDate("sale_date").toLocalDate();
-                String customerName = rs.getString("customer_name");
-                String customerEmail = rs.getString("customer_email");
-                int vehicleVin = rs.getInt("vin");
-
-                v = UserInterface.vehicleManager.findVehicleByVin(vehicleVin);
-
-                sc = new SalesContract(saleDate, customerName, customerEmail, v);
+                sc = createSalesContractObj(rs);
                 sale.add(sc);
             }
         } catch (SQLException e) {
@@ -127,5 +109,17 @@ public class SalesContractService implements SalesDAO {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private SalesContract createSalesContractObj(ResultSet rs) throws SQLException {
+        Vehicle v;
+        LocalDate saleDate = rs.getDate("sale_date").toLocalDate();
+        String customerName = rs.getString("customer_name");
+        String customerEmail = rs.getString("customer_email");
+        int vehicleVin = rs.getInt("vin");
+
+        v = UserInterface.vehicleManager.findVehicleByVin(vehicleVin);
+
+        return new SalesContract(saleDate, customerName, customerEmail, v);
     }
 }
