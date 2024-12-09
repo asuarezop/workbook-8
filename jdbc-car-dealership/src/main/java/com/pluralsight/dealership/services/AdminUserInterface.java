@@ -19,14 +19,15 @@ public class AdminUserInterface {
                 \nPlease select what type of request to search from database:
                 
                 [1] Update Vehicle - updates vehicle sale status from contract
-                [2] Add Dealership - adds a new dealership
-                [3] Remove Dealership - removes a dealership
-                [4] All Sales Contracts - display every sales contract
-                [5] All Lease Contracts - display every lease contract
+                [2] View All Dealerships - display every dealership
+                [3] Add Dealership - adds a new dealership
+                [4] Remove Dealership - removes a dealership
+                [5] All Sales Contracts - display every sales contract
                 [6] Remove Sales Contract - removes a specific sale contract
-                [7] Remove Lease Contract - removes a specific lease contract
-                [8] Sales Contract By ID - filter for sale contracts by id
-                [9] Lease Contract By ID - filter for lease contracts by id
+                [7] Sales Contract By ID - filter for sale contracts by id
+                [8] All Lease Contracts - display every lease contract
+                [9] Remove Lease Contract - removes a specific lease contract
+                [10] Lease Contract By ID - filter for lease contracts by id
                 [X] Exit Application - quits running application
                 """;
         boolean exitAdmin = false;
@@ -42,27 +43,30 @@ public class AdminUserInterface {
                     processUpdateVehicleInvRequest(dealership);
                     break;
                 case "2":
-                    processAddDealershipRequest();
+                    processGetAllDealershipsRequest();
                     break;
                 case "3":
-                    processRemoveDealershipRequest();
+                    processAddDealershipRequest();
                     break;
                 case "4":
-                    processGetAllSalesContracts();
+                    processRemoveDealershipRequest();
                     break;
                 case "5":
-                    processGetAllLeaseContracts();
+                    processGetAllSalesContracts();
                     break;
                 case "6":
                     processDeleteSalesContract();
                     break;
                 case "7":
-                    processDeleteLeaseSalesContract();
-                    break;
-                case "8":
                     processGetSalesContractById();
                     break;
+                case "8":
+                    processGetAllLeaseContracts();
+                    break;
                 case "9":
+                    processDeleteLeaseSalesContract();
+                    break;
+                case "10":
                     processGetLeaseContractById();
                     break;
                 case "X":
@@ -90,6 +94,12 @@ public class AdminUserInterface {
 
         //Updating vehicle sold status for selected vehicle
         UserInterface.vehicleManager.updateVehicleFromInventory(vehicleStatus, v);
+    }
+
+    public void processGetAllDealershipsRequest() {
+        List<Dealership> dealerships = UserInterface.dealershipManager.findAllDealerships();
+
+        UserInterface.printDealershipList(dealerships);
     }
 
     public void processAddDealershipRequest() {

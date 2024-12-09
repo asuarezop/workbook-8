@@ -318,9 +318,7 @@ public class UserInterface {
         //Querying for all dealerships
         List<Dealership> dealerships = dealershipManager.findAllDealerships();
 
-        for (Dealership d: dealerships) {
-            System.out.printf("%d) %s, %s, %s \n", d.getId(), d.getName(), d.getAddress(), d.getPhone());
-        }
+        printDealershipList(dealerships);
 
         //Prompting for user dealership choice
         promptInstructions("\nEnter dealership to search from:  ");
@@ -440,6 +438,17 @@ public class UserInterface {
             System.out.println(contractHeader);
         } else {
             System.out.println("Unknown Contract");
+        }
+    }
+
+    protected static void printDealershipList(List<Dealership> dealerships) {
+        if (!dealerships.isEmpty()) {
+            printDealershipHeader();
+            for (Dealership d: dealerships) {
+                System.out.println(d);
+            }
+        } else {
+            System.out.println("No dealerships matched your input.");
         }
     }
 
