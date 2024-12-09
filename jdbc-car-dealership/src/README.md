@@ -17,6 +17,7 @@
 ![Admin Option](main/resources/images/selecting_admin.png)
 
 2) Enter "admin" as the password
+
 ![Admin Password](main/resources/images/password_admin.png)
 
 3) Upon typing the correct password, the admin view should be visible to you
