@@ -1,7 +1,5 @@
 package com.pluralsight.dealership.models;
 
-import java.util.ArrayList;
-
 public class Dealership {
     private int id;
     private String name;
@@ -40,6 +38,6 @@ public class Dealership {
 
     @Override
     public String toString() {
-        return String.format("%-10d %-8s %-30s %-20s", id, name, address, phone);
+        return String.format("%-5d %-19s %-36s %-19s", id, name, address, phone);
     }
 }

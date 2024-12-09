@@ -2,7 +2,6 @@ package com.pluralsight.dealership.services;
 
 import JavaHelpers.ColorCodes;
 import com.pluralsight.dealership.controllers.SalesDAO;
-import com.pluralsight.dealership.models.LeaseContract;
 import com.pluralsight.dealership.models.SalesContract;
 import com.pluralsight.dealership.models.Vehicle;
 

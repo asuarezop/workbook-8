@@ -23,7 +23,6 @@ public class DealershipService implements DealershipDAO {
     //Retrieving all dealerships from database
     public List<Dealership> findAllDealerships() {
         List<Dealership> dealerships = new ArrayList<>();
-
         Dealership d;
 
         try (Connection conn = dataSource.getConnection()) {

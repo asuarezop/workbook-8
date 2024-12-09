@@ -415,7 +415,7 @@ public class UserInterface {
     }
 
     public static void printDealershipHeader() {
-        String dealershipHeader = ColorCodes.ORANGE_UNDERLINED + String.format("%-8s %-5s %-25s %-30s", "ID", "Name", "Address", "Phone") + ColorCodes.RESET;
+        String dealershipHeader = ColorCodes.ORANGE_UNDERLINED + String.format("%-5s %-19s %-10s %38s", "ID", "Name", "Address", "Phone") + ColorCodes.RESET;
         System.out.println(dealershipHeader);
     }
 
