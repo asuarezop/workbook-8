@@ -1,5 +1,6 @@
 package com.pluralsight.dealership.services;
 
+import JavaHelpers.ColorCodes;
 import com.pluralsight.dealership.models.Dealership;
 import com.pluralsight.dealership.models.LeaseContract;
 import com.pluralsight.dealership.models.SalesContract;
@@ -10,11 +11,11 @@ import java.util.List;
 
 public class AdminUserInterface {
     public void showAdminScreen(Dealership dealership) {
-        String adminScreenMenuHeader = """
+        String adminScreenMenuHeader = ColorCodes.CYAN + """
                 ================================
                 |     DEALERSHIP APP (ADMIN)   |
                 ================================
-                """;
+                """ + ColorCodes.RESET;
         String prompt = """
                 \nPlease select what type of request to search from database:
                 
@@ -28,7 +29,7 @@ public class AdminUserInterface {
                 [8] All Lease Contracts - display every lease contract
                 [9] Remove Lease Contract - removes a specific lease contract
                 [10] Lease Contract By ID - filter for lease contracts by id
-                [X] Exit Application - quits running application
+                [X] Exit Admin Panel - quits running application in admin mode
                 """;
         boolean exitAdmin = false;
 

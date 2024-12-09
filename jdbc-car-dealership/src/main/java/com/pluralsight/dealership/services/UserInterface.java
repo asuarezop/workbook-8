@@ -73,11 +73,11 @@ public class UserInterface {
     }
 
     public void showHomeScreen() {
-        String homeScreenMenuHeader = """
+        String homeScreenMenuHeader = ColorCodes.LIGHT_BLUE + """
                 =================================
                 |      DEALERSHIP APP (HOME)    |
                 =================================
-                """;
+                """ + ColorCodes.RESET;
         String prompt = """
                 \nPlease select what type of request to filter from dealership inventory:
                 
